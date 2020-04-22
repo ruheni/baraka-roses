@@ -26,6 +26,7 @@
 		"dotenv": "^8.2.0",
 		"graphql": "^14.0.2",
 		"graphql-tag": "2.10.1",
+		"mysql": "^2.18.1",
 		"next": "latest",
 		"prop-types": "^15.6.2",
 		"react": "^16.7.0",
