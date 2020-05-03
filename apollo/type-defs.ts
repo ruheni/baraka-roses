@@ -8,7 +8,7 @@ export const typeDefs = gql`
 		contact_name: String
 		email: String!
 		phone_no: String
-		agent: ShippingAgent
+		agent: [ShippingAgent]
 		orders: [Order]
 	}
 

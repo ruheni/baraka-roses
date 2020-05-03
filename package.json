@@ -4,14 +4,7 @@
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
-		"start": "next start",
-		"db:setup": "yarn db:create:dev && yarn db:create:test",
-		"db:create:dev": "createdb --owner=postgres next_now_dev",
-		"db:create:test": "createdb --owner=postgres next_now_test",
-		"g:migration": "yarn typeorm:local migration:generate -n",
-		"g:entity": "yarn typeorm:local entity:create -n",
-		"typeorm:local": "yarn local ./node_modules/typeorm/cli.js",
-		"local": "DOTENV_CONFIG_PATH=./.env ts-node -P ./tsconfig.yarn.json -r dotenv/config"
+		"start": "next start"
 	},
 	"dependencies": {
 		"@apollo/react-common": "3.0.1",
@@ -24,15 +17,14 @@
 		"apollo-server-micro": "2.9.0",
 		"apollo-utilities": "^1.3.2",
 		"dotenv": "^8.2.0",
+		"faunadb": "^2.13.1",
 		"graphql": "^14.0.2",
 		"graphql-tag": "2.10.1",
-		"mysql": "^2.18.1",
-		"next": "latest",
+		"micro-cors": "^0.1.1",
+		"next": "^9.3.6",
 		"prop-types": "^15.6.2",
 		"react": "^16.7.0",
-		"react-dom": "^16.7.0",
-		"reflect-metadata": "^0.1.13",
-		"typeorm": "^0.2.24"
+		"react-dom": "^16.7.0"
 	},
 	"author": "",
 	"license": "ISC",

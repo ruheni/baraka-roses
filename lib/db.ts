@@ -1,20 +1,6 @@
-// const mysql = require('serverless-mysql')
+import faunadb from 'faunadb';
 
-// const db = mysql({
-//     config: {
-//         host: process.env.mysql_host,
-//         database: process.env.mysql_database,
-//         user: process.env.mysql_user,
-//         password: process.env.mysql_password
-//     }
-// })
+const client = new faunadb.Client({ secret: process.env.FAUNA_KEY });
+const query = faunadb.query;
 
-// exports.query = async query => {
-//     try {
-//         const results = await db.query(query)
-//         await db.end()
-//         return results
-//     } catch (error) {
-//         return { error }
-//     }
-// }
+export { client, query };

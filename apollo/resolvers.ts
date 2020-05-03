@@ -1,5 +1,14 @@
 // varieties: Variety
-let customers = [];
+let customers = [
+	{
+		id: 1,
+		name: 'Ruheni Alex',
+		market: 'Netherlands',
+		contact_name: 'Ruheni',
+		email: 'aleruheni@email.com',
+		phone_no: '0722 123123',
+	},
+];
 let orders = [];
 let agents = [];
 let users = [];

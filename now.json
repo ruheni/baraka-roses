@@ -1,8 +1,5 @@
 {
 	"env": {
-		"mysql_host": "@mysql_host",
-		"mysql_user": "@mysql_user",
-		"mysql_password": "@mysql_password",
-		"mysql_database": "@mysql_database"
+		"fauna_db": "@baraka_rosesdb_key_dev"
 	}
 }
