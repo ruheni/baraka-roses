@@ -1,17 +1,20 @@
 import express from 'express';
-import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express'
-import { buildSchema } from 'type-graphql';
-import { UserResolver } from './resolver/UserResolver';
+import { buildSchema } from "type-graphql";
+import { createConnection } from 'typeorm';
+import "reflect-metadata";
+import { UserResolver } from './resolvers/UserResolver';
 
 
 (async () => {
     const app = express()
 
+    await createConnection()
+
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
             resolvers: [UserResolver]
-        })
+        }),
     })
 
     apolloServer.applyMiddleware({ app })
