@@ -1,5 +1,5 @@
 import React from 'react';
-import Signup from 'components/SignUp';
+import Signup from 'pages/SignUp/SignUp';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,10 +11,12 @@ import './App.css';
 const AppRoutes = () => {
   return (
     <Switch>
-      <Route path="/">
+      <Route path="/signup">
         <Signup />
       </Route>
-     
+      <Route exact path="/">
+        <Signup />
+      </Route>
     </Switch>
   )
 }
