@@ -1,8 +1,8 @@
+import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express'
+import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from 'typeorm';
-import "reflect-metadata";
 import { UserResolver } from './resolvers/UserResolver';
 
 

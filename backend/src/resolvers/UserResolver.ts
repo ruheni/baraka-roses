@@ -1,4 +1,5 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql'
+import { Query, Resolver, Mutation, Arg } from 'type-graphql';
+import { User } from 'src/entity/User';
 
 @Resolver()
 export class UserResolver {
@@ -7,19 +8,18 @@ export class UserResolver {
         return 'hello there stranger'
     }
 
-
-    @Mutation()
+    @Mutation(() => Boolean)
     async signup(
-        @Arg('firstname') firstName: string,
+        @Arg('firstName') firstName: string,
         @Arg('lastName') lastName: string,
         @Arg('email') email: string,
     ) {
-        // await User.insert({
-        //     firstName,
-        //     lastName,
-        //     email
-        // })
-        const user = { firstName, lastName, email };
-        return user;
+        await User.insert({
+            firstName,
+            lastName,
+            email
+        })
+
+        return true;
     }
 }
