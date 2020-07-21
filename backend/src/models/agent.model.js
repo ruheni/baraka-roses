@@ -28,3 +28,6 @@ const agentSchema = new Schema({
     ]
 })
 
+const agentModel = mongoose.model('agents', agentSchema)
+
+export default agentModel
