@@ -1,18 +1,16 @@
 import express from 'express';
+import {
+    customers_get,
+    customer_profile_get,
+    customer_profile_post
+} from '../controllers/customer.controller';
 
 const customersRouter = express.Router()
 
-customersRouter.get('/', (req, res) => {
-    res.json({ message: 'fetching customers' })
-})
+customersRouter.get('/', (req, res) => customers_get)
 
-customersRouter.get('/:id', (req, res) => {
-    res.json({ message: `fetching customer of id: ${req.params.id}` })
-})
+customersRouter.get('/:id', customer_profile_get)
 
-customersRouter.post('/', (req, res) => {
-    // create new or update existing customer
-    res.json({ message: 'posting customer data' })
-})
+customersRouter.post('/', customer_profile_post)
 
 export default customersRouter

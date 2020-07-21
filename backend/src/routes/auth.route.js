@@ -1,28 +1,19 @@
 import express from 'express'
+import {
+    forgot_password,
+    reset_password,
+    user_login,
+    user_signup
+} from '../controllers/user.controller'
 
 const authRouter = express.Router()
 
-authRouter.post('/signup', (req, res) => {
-    const { firstName, lastName, email, password, role } = req.body
+authRouter.post('/signup', user_signup)
 
-    res.json({
-        message: 'signup requested',
-        userInfo: {
-            firstName, lastName, email, password, role
-        }
-    })
-})
+authRouter.post('/login', user_login)
 
-authRouter.post('/login', (req, res) => {
-    res.json({ message: 'login requested' })
-})
+authRouter.post('/forgot-password', forgot_password)
 
-authRouter.post('/forgot-password', (req, res) => {
-    res.json({ message: 'forgot-password requested' })
-})
-
-authRouter.post('/reset-password', (req, res) => {
-    res.json({ message: 'reset password requested' })
-})
+authRouter.post('/reset-password', reset_password)
 
 export default authRouter

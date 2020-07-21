@@ -1,16 +1,16 @@
 import express from 'express'
+import {
+    agents_get,
+    agent_profile_get,
+    agent_profile_post
+} from '../controllers/agent.controller'
 
 const agentsRouter = express.Router()
 
-agentsRouter.get('/', (req, res) => {
-    res.json({ message: 'agents' })
-})
+agentsRouter.get('/', agents_get)
 
-agentsRouter.post('/', (req, res) => {
-    res.json({ message: 'agent created' })
-})
+agentsRouter.post('/', agent_profile_post)
 
-agentsRouter.get('/:id', (req, res) => {
-    res.json({ message: `agent: ${req.params.id}` })
-})
+agentsRouter.get('/:id', agent_profile_get)
+
 export default agentsRouter

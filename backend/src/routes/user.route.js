@@ -1,24 +1,16 @@
 import express from 'express';
+import {
+    users_get,
+    user_profile_get,
+    user_profile_update
+} from '../controllers/user.controller';
 
 const usersRouter = express.Router()
 
-usersRouter.get('/', (req, res) => {
-    res.json({ message: 'users here' })
-})
+usersRouter.get('/', users_get)
 
-usersRouter.post('/', (req, res) => {
-    // create new or update existing..
-    const { firstName, lastName, email, password } = req.body
+usersRouter.get('/:id', user_profile_get)
 
-    res.json({ message: 'successful post req', data: { firstName, lastName, email, password } })
-})
-
-usersRouter.get('/:id', (req, res) => {
-    res.json({ message: `user of id: ${req.params.id}` })
-})
-
-usersRouter.delete('/:id', (req, res) => {
-    res.json({ message: `deleted user of id: ${req.params.id}` })
-})
+usersRouter.post('/:id', user_profile_update)
 
 export default usersRouter;
