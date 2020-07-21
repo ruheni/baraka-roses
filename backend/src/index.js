@@ -2,6 +2,7 @@ require('dotenv').config({ path: './.env' });
 import bodyParser from 'body-parser';
 import express from 'express';
 import logger from 'morgan';
+import agentsRouter from './routes/agent.route';
 import authRouter from './routes/auth.route';
 import customersRouter from './routes/customer.route';
 import ordersRouter from './routes/order.route';
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 
 app.use(logger('dev'))
 
+app.use('/api/agents', agentsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/customers', customersRouter)
 app.use('/api/auth', authRouter)
