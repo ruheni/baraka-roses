@@ -1,4 +1,4 @@
-.Signup{
+.Login{
     position: relative;
     background: url(../../assets/images/roses_bg.jpg) no-repeat center center fixed;
     background-size: cover;
@@ -22,10 +22,10 @@
 
 .inputForm{
     position: absolute;
-    width: 46vw;
-    height: 84vh;
+    width: 50vw;
+    height: 67vh;
     left: 47vw;
-    top: 16vh;
+    top: 33vh;
     padding-top: 50px;
     padding-left: 70px;
     padding-right: 70px;
@@ -36,15 +36,13 @@
 }
 
 .inputForm h1{
-    
-    padding-right: 140px;
+    margin-bottom: 4vh;
+    padding-right: 400px;
     top: 256px;
-    display: inline;
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
     line-height: 54px;
-    /* identical to box height left: 740px;*/
     color: #EB2536;
 }
 
@@ -58,26 +56,32 @@
 }
 
 .checkBox{
-    padding-left:100px;
-    display: inline;
+    padding-left:140px;
     left: -12vw;
-    padding-top: 15vh;
+    display: inline;
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 27px;
 }
 
+.forgotTxt{
+    display: inline;
+    text-decoration: none;
+    color: #EB2536;
+}
+
 .signupBtn{
-    margin-top: 6vh;
+    left: 748px;
+    top: 812px;
     background: #EB2536;
     border-radius: 18px;
-    width: 35vw;
+    width: 37vw;
     height: 9vh;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     line-height: 45px;
-
+    margin-top: 10vh;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Signup from 'pages/SignUp/SignUp';
+import LogIn from 'pages/LogIn/LogIn';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,11 +12,14 @@ import './App.css';
 const AppRoutes = () => {
   return (
     <Switch>
+      <Route exact path="/">
+        <Signup />
+      </Route>
       <Route path="/signup">
         <Signup />
       </Route>
-      <Route exact path="/">
-        <Signup />
+      <Route exact path="/login">
+        <LogIn />
       </Route>
     </Switch>
   )
