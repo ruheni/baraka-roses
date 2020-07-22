@@ -6,7 +6,7 @@
     width: 100vw;
 }
 
-#main_title {
+.mainTitle {
     position: absolute;
     width: 289px;
     height: 54px;
@@ -21,7 +21,7 @@
     
 }
 
-.input_form{
+.inputForm{
     position: absolute;
     width: 46vw;
     height: 84vh;
@@ -37,7 +37,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.input_form h1{
+.inputForm h1{
     
     padding-right: 140px;
     top: 256px;
@@ -60,7 +60,7 @@
     border-radius: 0px;
 }
 
-#checkBox{
+.checkBox{
     padding-left:100px;
     display: inline;
     left: -12vw;
@@ -72,7 +72,7 @@
     line-height: 27px;
 }
 
-#signupBtn{
+.signupBtn{
     margin-top: 6vh;
    
     background: #EB2536;

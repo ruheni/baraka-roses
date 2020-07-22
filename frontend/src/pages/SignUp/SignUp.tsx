@@ -1,43 +1,43 @@
 import React from 'react';
-import './SignUp.css';
+import styles from './SignUp.module.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 function Signup() {
   return (
-    <div className="Signup">
-      <h1 id="main_title" className="text-white">Baraka Flowers</h1>
+    <div className={styles.Signup}>
+      <h1 className= {styles.mainTitle} >Baraka Flowers</h1>
 
-      <div className="input_form">
+      <div className={styles.inputForm}>
           <Form>
               <h1>Sign Up as Admin</h1>
               <FormGroup>
-                <Input className="inputEntry" type="text" name="first_name" id="firstName" placeholder="First Name" />
+                <Input className={styles.inputEntry} type="text" name="first_name" id="firstName" placeholder="First Name" />
               </FormGroup>
 
               <FormGroup>
-                <Input className="inputEntry" type="text" name="last_name" id="lastName" placeholder="Last Name" />
+                <Input className={styles.inputEntry} type="text" name="last_name" id="lastName" placeholder="Last Name" />
               </FormGroup>
 
               <FormGroup>
-                <Input className="inputEntry" type="email" name="email" id="Email" placeholder="Email" />
+                <Input className={styles.inputEntry} type="email" name="email" id="Email" placeholder="Email" />
               </FormGroup>
 
               <FormGroup>
-                <Input className="inputEntry" type="password" name="password" id="Password" placeholder="Password" />
+                <Input className={styles.inputEntry} type="password" name="pass" id="Pass" placeholder="Password" />
               </FormGroup>
 
               <FormGroup>
-                <Input className="inputEntry" type="password" name="confirm_pass" id="confirmPass" placeholder="Confirm Password" />
+                <Input className={styles.inputEntry} type="password" name="confirm_pass" id="confirmPass" placeholder="Confirm Password" />
               </FormGroup>
 
-              <FormGroup check id="checkBox">
+              <FormGroup check className={styles.checkBox}>
                 <Label check>
                 <Input type="checkbox" />{' '}
                 Remember me!
                 </Label>
               </FormGroup>
 
-            <Button id="signupBtn">Sign Up</Button>
+            <Button className={styles.signupBtn}>Sign Up</Button>
           </Form>
       </div>
     </div>
