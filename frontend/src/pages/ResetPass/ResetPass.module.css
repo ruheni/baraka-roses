@@ -1,4 +1,4 @@
-.Login{
+.resetPass{
     position: relative;
     background: url(../../assets/images/roses_bg.jpg) no-repeat center center fixed;
     background-size: cover;
@@ -36,8 +36,8 @@
 }
 
 .inputForm h1{
-    margin-bottom: 4vh;
-    padding-right: 400px;
+    margin-bottom: 2vh;
+    padding-right: 200px;
     top: 256px;
     font-style: normal;
     font-weight: bold;
@@ -56,7 +56,6 @@
 }
 
 .checkBox{
-    padding-left:140px;
     left: -12vw;
     display: inline;
     font-style: normal;
@@ -71,17 +70,17 @@
     color: #EB2536;
 }
 
-.loginBtn{
+.signupBtn{
     left: 748px;
     top: 812px;
     background: #EB2536;
     border-radius: 18px;
-    width: 37vw;
+    width: 39vw;
     height: 9vh;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     line-height: 45px;
-    margin-top: 10vh;
+    margin-top: 5vh;
 }
 

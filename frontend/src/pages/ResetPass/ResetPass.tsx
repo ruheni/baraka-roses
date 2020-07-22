@@ -1,22 +1,26 @@
 import React from 'react';
-import styles from './LogIn.module.css';
+import styles from './ResetPass.module.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-function LogIn() {
+function ResetPass() {
   return (
-    <div className={styles.Login}>
+    <div className={styles.resetPass}>
       <h1 className= {styles.mainTitle} >Baraka Flowers</h1>
 
       <div className={styles.inputForm}>
           <Form>
-              <h1>Log in</h1>
+              <h1>Reset password</h1>
 
               <FormGroup>
                 <Input className={styles.inputEntry} type="email" name="email" id="Email" placeholder="Email" />
               </FormGroup>
 
               <FormGroup>
-                <Input className={styles.inputEntry} type="password" name="pass" id="Pass" placeholder="Password" />
+                <Input className={styles.inputEntry} type="password" name="pass" id="Pass" placeholder="New Password" />
+              </FormGroup>
+
+              <FormGroup>
+                <Input className={styles.inputEntry} type="password" name="confirmPass" id="confirmPass" placeholder="Confirm Password" />
               </FormGroup>
 
               <FormGroup check className={styles.checkBox}>
@@ -25,12 +29,12 @@ function LogIn() {
                 Remember me!
                 </Label>
               </FormGroup>
-              <a href="/" className={styles.forgotTxt}>Forgot password?</a>
-            <Button className={styles.loginBtn}>Log In</Button>
+              
+            <Button className={styles.signupBtn}>Sign In</Button>
           </Form>
       </div>
     </div>
   );
 }
 
-export default LogIn;
+export default ResetPass;

@@ -1,6 +1,7 @@
 import React from 'react';
 import Signup from 'pages/SignUp/SignUp';
 import LogIn from 'pages/LogIn/LogIn';
+import ResetPass from 'pages/ResetPass/ResetPass';
 import {
   BrowserRouter as Router,
   Route,
@@ -20,6 +21,9 @@ const AppRoutes = () => {
       </Route>
       <Route exact path="/login">
         <LogIn />
+      </Route>
+      <Route exact path="/reset">
+        <ResetPass />
       </Route>
     </Switch>
   )
