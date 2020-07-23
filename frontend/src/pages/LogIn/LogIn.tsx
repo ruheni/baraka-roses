@@ -22,7 +22,7 @@ function LogIn() {
               <FormGroup check className={styles.checkBox}>
                 <Label check>
                 <Input type="checkbox" />{' '}
-                Remember me!
+                Remember me! 
                 </Label>
               </FormGroup>
               <a href="/" className={styles.forgotTxt}>Forgot password?</a>

@@ -22,13 +22,13 @@
 
 .inputForm{
     position: absolute;
-    width: 50vw;
-    height: 67vh;
+    width: 46vw;
+    height: 60vh;
     left: 47vw;
-    top: 33vh;
+    top: 40vh;
     padding-top: 50px;
-    padding-left: 70px;
-    padding-right: 70px;
+    padding-left: 40px;
+    padding-right: 50px;
     padding-bottom: 10px;
     background: #FFFFFF;
     border-top-left-radius: 61px;
@@ -36,52 +36,64 @@
 }
 
 .inputForm h1{
-    margin-bottom: 4vh;
-    padding-right: 400px;
     top: 256px;
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
-    line-height: 54px;
     color: #EB2536;
+    text-align: left;
+    padding-left: 5%;
 }
 
 .inputEntry{
-    border: none;
-	border-bottom: 1px solid #1F2526;
-	outline: none;
-	height: 48px;
-    font-size: 16px;
-    border-radius: 0px;
+    margin-top: 2vh;
+    display: inline-block;
+    margin-right: auto;
+    margin-bottom: auto;
+    width: 35vw;
 }
 
 .checkBox{
-    padding-left:140px;
-    left: -12vw;
-    display: inline;
+    position: absolute;
+    left: 13%;
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
-    line-height: 27px;
 }
 
 .forgotTxt{
-    display: inline;
     text-decoration: none;
     color: #EB2536;
+    padding-left: 60%;
 }
 
 .loginBtn{
-    left: 748px;
-    top: 812px;
+    margin-top: 6vh;
     background: #EB2536;
     border-radius: 18px;
-    width: 37vw;
+    width: 35vw;
     height: 9vh;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     line-height: 45px;
-    margin-top: 10vh;
 }
 
+@media(max-width: 768px){
+    .forgotTxt{
+        position: absolute;
+        top: 27vh;
+        right: 45%;
+        clear: both;
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-top: 5px; 
+    }
+}
+
+@media (min-width: 1440px){
+    .inputForm h1{
+        padding-left: 9%;
+    }  
+}
