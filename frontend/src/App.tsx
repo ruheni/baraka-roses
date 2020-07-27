@@ -2,6 +2,7 @@ import React from 'react';
 import Signup from 'pages/SignUp/SignUp';
 import LogIn from 'pages/LogIn/LogIn';
 import ResetPass from 'pages/ResetPass/ResetPass';
+import MainView from 'pages/MainView/MainView'
 import {
   BrowserRouter as Router,
   Route,
@@ -24,6 +25,9 @@ const AppRoutes = () => {
       </Route>
       <Route exact path="/reset">
         <ResetPass />
+      </Route>
+      <Route exact path="/home">
+        <MainView />
       </Route>
     </Switch>
   )
