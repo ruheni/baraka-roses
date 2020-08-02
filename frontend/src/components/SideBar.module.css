@@ -1,0 +1,52 @@
+.wrapper {
+    overflow-x: hidden;
+    
+  }
+  
+  .sidebarWrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+  }
+  
+  #sidebar-wrapper .sidebar-heading {
+  padding: 1.25rem 1.25rem;
+  font-size: 1.2rem;
+  }
+  .sidebar-heading{
+    margin-bottom: 1.25rem;
+  }
+  
+  #sidebar-wrapper .list-group {
+  width: 15rem;
+  }
+  
+  #page-content-wrapper {
+  min-width: 100vw;
+  }
+  
+  #wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+  }
+  
+  .card-body{
+    padding: 0em;
+  }
+  @media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+  
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+  
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+  
+  }

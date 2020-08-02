@@ -3,8 +3,7 @@ import SideBar from 'components/SideBar';
 
 function MainView() {
   return (
-    <div className="MainView
-  ">
+    <div className="MainView">
       <SideBar/>
     </div>
   );
