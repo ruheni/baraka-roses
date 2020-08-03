@@ -35,6 +35,7 @@ class SideBar extends React.Component {
     return (
       <div >
          <Layout>
+         
           <Header style={{padding: 0}}>
             <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal" theme='dark'>
               <Menu.Item key="brand" style={{float: 'left'}}>
@@ -48,6 +49,7 @@ class SideBar extends React.Component {
               </Menu.Item>
             </Menu>
           </Header>
+        
 
 
           <Layout>
@@ -58,7 +60,7 @@ class SideBar extends React.Component {
             mode="inline"
             theme="dark"
             inlineCollapsed={this.state.collapsed}
-            style={{ minHeight: '100vh' }}>
+            style={{ minHeight: '95vh' }}>
             <Menu.Item key="1" icon={<PieChartOutlined />}>
               Orders
             </Menu.Item>

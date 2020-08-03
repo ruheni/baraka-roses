@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
-//import { Form, FormGroup} from 'reactstrap';
 import { Layout, Typography, Form, Input, Table, Tag, Space } from 'antd';
+import styles from 'components/Orders.module.css';
  
 const columns = [
   {
@@ -27,7 +27,7 @@ const columns = [
       <>
         {tags.map((tag: any) => {
           let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
+          if (tag === 'approved') {
             color = 'volcano';
           }
           return (
@@ -52,25 +52,25 @@ const columns = [
 
 const data = [
   {
-    orderid: '1',
-    customer: 'John Brown',
-    product: 32,
-    status: 'New York No. 1 Lake Park',
-    tags: ['nice'],
+    orderid: '12564763',
+    customer: 'Joe',
+    product: 'Tulips',
+    status: 'Approved',
+    tags: ['approved'],
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
+    orderid: '15668756',
+    customer: 'Peach',
+    product: 'Roses',
+    status: 'Denied',
+    tags: ['denied'],
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    orderid: '435353',
+    customer: 'Deadpool',
+    product: 'cabbage',
+    status: 'Approved',
+    tags: ['approved'],
   },
 ];
 
@@ -92,27 +92,30 @@ function Orders () {
   const {Search} = Input
 
   return(
-    <div>
+    <div className={styles.Orders}>
       <Content>
         <Layout>
-         
-            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish}>
+        <div >
+          <Space align="baseline">
+            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
-              <Form.Item name="navtitle">
-                <Title level={3} type="secondary" >Orders</Title> 
+              <Form.Item name="navtitle"  >
+                <Title level={2} type="secondary" className={styles.spaceAlign}>Orders</Title> 
               </Form.Item>
 
-              <Form.Item>
-                    <Search placeholder="Search" onSearch={value => console.log(value)} style={{ width: 200 }}/>
+              <Form.Item >
+                    <Search placeholder="Search" onSearch={value => console.log(value)} style={{ width: 200 }} className={styles.spaceAlign}/>
               </Form.Item>
-              <Form.Item name="addOrder">
-                  <a href="/home"><Title level={4} type="danger" >+ Add New Order</Title></a>
+              <Form.Item name="addOrder" >
+                  <a href="/home"><Title level={4} type="danger" className={styles.spaceAlign}>+ Add New Order</Title></a>
               </Form.Item>
               
             </Form>
+          </Space>
+        </div>
         </Layout>
 
-        <Content>
+        <Content  className={styles.Table}>
           <Table columns={columns} dataSource={data} />
         </Content>
       </Content>
