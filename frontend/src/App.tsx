@@ -2,7 +2,11 @@ import React from 'react';
 import Signup from 'pages/SignUp/SignUp';
 import LogIn from 'pages/LogIn/LogIn';
 import ResetPass from 'pages/ResetPass/ResetPass';
-import MainView from 'pages/MainView/MainView'
+import SideBar from 'components/SideBar';
+import Orders from 'components/Orders';
+import Customers from 'components/Customers';
+import Agents from 'components/Agents';
+import Products from 'components/Products'
 import {
   BrowserRouter as Router,
   Route,
@@ -20,14 +24,26 @@ const AppRoutes = () => {
       <Route path="/signup">
         <Signup />
       </Route>
-      <Route exact path="/login">
+      <Route path="/login">
         <LogIn />
       </Route>
-      <Route exact path="/reset">
+      <Route path="/reset">
         <ResetPass />
       </Route>
-      <Route exact path="/home">
-        <MainView />
+      <Route path="/home">
+        <SideBar/>
+      </Route>
+      <Route path="/orders">
+        <Orders/>
+      </Route>
+      <Route path="/customers">
+        <Customers/>
+      </Route>
+      <Route path="/agents">
+        <Agents/>
+      </Route>
+      <Route path="/products">
+        <Products/>
       </Route>
     </Switch>
   )

@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import { Layout, Typography, Form, Input, Table, Tag, Space } from 'antd';
 import styles from 'components/Orders.module.css';
+import SideBar from 'components/SideBar'
  
 const columns = [
   {
@@ -72,6 +73,111 @@ const data = [
     status: 'Approved',
     tags: ['approved'],
   },
+  {
+    orderid: '12564763',
+    customer: 'Joe',
+    product: 'Tulips',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '15668756',
+    customer: 'Peach',
+    product: 'Roses',
+    status: 'Denied',
+    tags: ['denied'],
+  },
+  {
+    orderid: '435353',
+    customer: 'Deadpool',
+    product: 'cabbage',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '12564763',
+    customer: 'Joe',
+    product: 'Tulips',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '15668756',
+    customer: 'Peach',
+    product: 'Roses',
+    status: 'Denied',
+    tags: ['denied'],
+  },
+  {
+    orderid: '435353',
+    customer: 'Deadpool',
+    product: 'cabbage',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '12564763',
+    customer: 'Joe',
+    product: 'Tulips',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '15668756',
+    customer: 'Peach',
+    product: 'Roses',
+    status: 'Denied',
+    tags: ['denied'],
+  },
+  {
+    orderid: '435353',
+    customer: 'Deadpool',
+    product: 'cabbage',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '12564763',
+    customer: 'Joe',
+    product: 'Tulips',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '15668756',
+    customer: 'Peach',
+    product: 'Roses',
+    status: 'Denied',
+    tags: ['denied'],
+  },
+  {
+    orderid: '435353',
+    customer: 'Deadpool',
+    product: 'cabbage',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '12564763',
+    customer: 'Joe',
+    product: 'Tulips',
+    status: 'Approved',
+    tags: ['approved'],
+  },
+  {
+    orderid: '15668756',
+    customer: 'Peach',
+    product: 'Roses',
+    status: 'Denied',
+    tags: ['denied'],
+  },
+  {
+    orderid: '435353',
+    customer: 'Deadpool',
+    product: 'cabbage',
+    status: 'Approved',
+    tags: ['approved'],
+  }
 ];
 
 function Orders () {
@@ -92,6 +198,7 @@ function Orders () {
   const {Search} = Input
 
   return(
+    <SideBar>
     <div className={styles.Orders}>
       <Content>
         <Layout>
@@ -120,6 +227,7 @@ function Orders () {
         </Content>
       </Content>
   </div>
+  </SideBar>
   )
 }
 

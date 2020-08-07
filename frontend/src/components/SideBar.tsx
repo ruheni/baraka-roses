@@ -1,9 +1,9 @@
 import React from 'react';
-import Orders from 'components/Orders'
-import { Menu, Button,  Layout } from 'antd';
+import {Link} from 'react-router-dom';
+import { Menu, Layout } from 'antd';
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  //MenuUnfoldOutlined,
+ // MenuFoldOutlined,
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined
@@ -41,6 +41,7 @@ class SideBar extends React.Component {
               <Menu.Item key="brand" style={{float: 'left'}}>
                 Baraka Roses
               </Menu.Item>
+         
               <Menu.Item key="notify" style={{float: 'right'}}>
                 Notifications
               </Menu.Item>
@@ -62,27 +63,22 @@ class SideBar extends React.Component {
             inlineCollapsed={this.state.collapsed}
             style={{ minHeight: '95vh' }}>
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-              Orders
+              <Link to="/orders">Orders</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
-              Customers
+              <Link to="/customers">Customers</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>
-              Agents
+              <Link to="/agents">Agents</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<ContainerOutlined />}>
-            Products
+              <Link to="/products">Products</Link>
             </Menu.Item>
-            <Menu.Item key="toggler" >
-              <Button type="primary" onClick={this.toggleCollapsed} >
-                {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-              </Button>
-            </Menu.Item>
-            
           </Menu>
+          
           </Sider>
      
-          <Orders/>
+          {this.props.children}
             
           </Layout>
         </Layout>
