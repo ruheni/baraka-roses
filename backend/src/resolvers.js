@@ -1,25 +1,43 @@
-import jwt from 'jsonwebtoken'
+import { sign } from 'jsonwebtoken'
+import { compare } from 'bcryptjs'
 import { users } from './data'
 
 export default {
     Query: {
-        user(_parent, { id }) {
-            return users.find(user => user.id === id)
+        user: async (_parent, { email }, ctx) => {
+
+            const user = await ctx.prisma.user.findOne({
+                where: {
+                    email
+                }
+            })
+            return user
         },
-        viewer(_parent, args, { user }) {
-            return users.find(({ id }) => id === user.sub)
-        }
     },
     Mutation: {
-        login(_parent, { email, password }) {
+        login: async (_parent, { email, password }, ctx) => {
+            const user = await ctx.db.user.findOne({
+                where: {
+                    email,
+                },
+            })
+
+            if (!user) {
+                throw new Error(`No user found fo email: ${email}`)
+            }
+
+            const validPassword = await compare(password, user.password)
+            if (!validPassword) {
+                throw new Error('Invalid password')
+            }
+
             const { id, permissions, roles } = users.find(
                 user => user.email === email && user.password === password
             );
-            return jwt.sign(
-                { "https://spaceapi.com/graphql": { roles, permissions } },
-                "SUPER_SECRET",
-                { algorithm: "HS256", subject: id, expiresIn: "1d" }
-            );
+            return {
+                token: sign({ userId: user.id }, process.env.JWT_SECRET),
+                user
+            }
         }
     }
 }

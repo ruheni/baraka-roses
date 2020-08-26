@@ -1,0 +1,104 @@
+generator prisma_client {
+  provider = "prisma-client-js"
+}
+
+datasource postgres {
+  provider = "postgresql"
+  url      = env("HEROKU_POSTGRESQL_OLIVE_URL")
+}
+
+model Agent {
+  customerId  Int?
+  email       String    @unique
+  id          Int       @default(autoincrement()) @id
+  name        String
+  phoneNumber String
+  createdAt   DateTime  @default(now())
+  Customer    Customer? @relation(fields: [customerId], references: [id])
+}
+
+model Customer {
+  contactName String
+  email       String   @unique
+  id          Int      @default(autoincrement()) @id
+  market      String
+  name        String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+  Agent       Agent[]
+  Order       Order[]
+}
+
+model Order {
+  createdAt      DateTime         @default(now())
+  customerId     Int?
+  date           DateTime
+  id             Int              @default(autoincrement()) @id
+  status         OrderStatus
+  Customer       Customer?        @relation(fields: [customerId], references: [id])
+  OrderedProduct OrderedProduct[]
+  Product        Product[]
+}
+
+model OrderedProduct {
+  finalQuantity   Int
+  id              Int     @default(autoincrement()) @id
+  initialQuantity Int
+  orderId         Int?
+  productId       Int
+  Order           Order?  @relation(fields: [orderId], references: [id])
+  Product         Product @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  color          Color
+  grade          Grade
+  id             Int              @default(autoincrement()) @id
+  length         Int
+  orderId        Int?
+  quantity       Int
+  variety        String
+  createdAt      DateTime         @default(now())
+  Order          Order?           @relation(fields: [orderId], references: [id])
+  OrderedProduct OrderedProduct[]
+}
+
+model User {
+  email     String   @unique
+  firstName String
+  id        Int      @default(autoincrement()) @id
+  lastName  String
+  password  String
+  role      Role
+  createdAt DateTime @default(now())
+}
+
+enum Color {
+  BI_COLOUR
+  CERISE
+  LILAC
+  ORANGE
+  PEACH
+  PINK
+  RED
+  WHITE
+  YELLOW
+}
+
+enum Grade {
+  GRADED
+  UNGRADED
+}
+
+enum OrderStatus {
+  CANCELLED
+  PENDING
+  REVIEWED
+}
+
+enum Role {
+  ADMIN
+  GENERAL_MANAGER
+  SALES_EXEC
+  STOCK_CLERK
+}

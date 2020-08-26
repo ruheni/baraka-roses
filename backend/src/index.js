@@ -2,6 +2,7 @@ require('dotenv').config();
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import expressJwt from 'express-jwt';
+import { createContext } from './context'
 
 import resolvers from './resolvers';
 import typeDefs from './typeDefs';
@@ -11,7 +12,7 @@ const app = express();
 
 app.use(
     expressJwt({
-        secret: 'SUPER_SECRET',
+        secret: process.env.JWT_SECRET || 'SUPER_SECRET',
         algorithms: ['HS256'],
         credentialsRequired: false,
     })
@@ -19,11 +20,7 @@ app.use(
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => {
-        // @ts-ignore
-        const user = req.user || null
-        return { user }
-    }
+    context: createContext,
 });
 
 server.applyMiddleware({ app });

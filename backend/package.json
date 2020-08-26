@@ -9,16 +9,19 @@
     "start": "node ./src/index"
   },
   "dependencies": {
+    "@prisma/client": "^2.5.1",
     "apollo-server-express": "^2.16.1",
+    "bcryptjs": "^2.4.3",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "graphql-middleware": "^4.0.2",
     "graphql-shield": "^7.3.5",
-    "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.4"
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "@prisma/cli": "^2.5.1",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
   }
 }
