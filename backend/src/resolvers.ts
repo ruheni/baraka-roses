@@ -1,21 +1,21 @@
 import { sign } from 'jsonwebtoken'
 import { compare } from 'bcryptjs'
-import { users } from './data'
 
 export default {
     Query: {
-        user: async (_parent, { email }, ctx) => {
+        user: async (_parent: any, { email }: any, ctx: { prisma: { user: { findOne: (arg0: { where: { email: any } }) => any } } }) => {
 
             const user = await ctx.prisma.user.findOne({
                 where: {
                     email
                 }
             })
+
             return user
         },
     },
     Mutation: {
-        login: async (_parent, { email, password }, ctx) => {
+        login: async (_parent: any, { email, password }: any, ctx: { db: { user: { findOne: (arg0: { where: { email: any } }) => any } } }) => {
             const user = await ctx.db.user.findOne({
                 where: {
                     email,
@@ -31,11 +31,8 @@ export default {
                 throw new Error('Invalid password')
             }
 
-            const { id, permissions, roles } = users.find(
-                user => user.email === email && user.password === password
-            );
             return {
-                token: sign({ userId: user.id }, process.env.JWT_SECRET),
+                token: sign({ userId: user.id }, `${process.env.JWT_SECRET}`),
                 user
             }
         }

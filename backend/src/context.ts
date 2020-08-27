@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 // authentication context
-const authContext = ({ req }) => {
+const authContext = ({ req }: any) => {
     const user = req.user || null
     return { user }
 }
