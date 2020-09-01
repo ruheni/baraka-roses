@@ -1,8 +1,9 @@
-import React, { useState, useEffect }  from 'react';
-import { Layout, Typography, Form, Input, Table, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Typography, Form, Input, Table, Space, Button, Modal } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import styles from 'components/Agents.module.css';
 import SideBar from 'components/SideBar';
- 
+
 const columns = [
   {
     title: 'Name',
@@ -29,7 +30,7 @@ const columns = [
     title: 'Edit',
     dataIndex: 'edit',
     key: 'edit',
-    
+
   },
 ];
 
@@ -64,11 +65,81 @@ const data = [
   }
 ];
 
-function Agents () {
+const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
+  const [form] = Form.useForm();
+  return (
+    <Modal
+      visible={visible}
+      title="Add New Agent"
+      okText="Add"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then(values => {
+            form.resetFields();
+            onCreate(values);
+          })
+          .catch(info => {
+            console.log('Validate Failed:', info);
+          });
+      }}
+    >
+      <Form
+        form={form}
+        layout="horizontal"
+        name="form_in_modal"
+        initialValues={{
+          modifier: 'public',
+        }}
+      >
+        
+        <Form.Item
+          name="name"
+          label="Name: "
+          rules={[{ required: true, message: "Please input the agent's name" }]}
+        >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
+        </Form.Item>
+        
+        <Form.Item
+          name="email"
+          label="Email Address: "
+        >
+          <Input placeholder="Email Address" type="email"/>
+        </Form.Item>
+
+        <Form.Item
+          name="phoneNumber"
+          label="Phone Number: "
+        >
+          <Input placeholder="Phone Number" type="number"/>
+        </Form.Item>
+
+        <Form.Item
+          name="location"
+          label="Location: "
+        >
+          <Input  placeholder="Location" type="text"/>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+function Agents() {
+
   const [form] = Form.useForm();
   const [, forceUpdate] = useState();
 
-  // To disable submit button at the beginning.
+  const [visible, setVisible] = useState(false);
+
+  const onCreate = (values: any) => {
+    console.log('Received values of form: ', values);
+    setVisible(false);
+  };
+
   useEffect(() => {
     forceUpdate({});
   }, []);
@@ -79,39 +150,55 @@ function Agents () {
 
   const { Title } = Typography;
   const { Content } = Layout;
-  const {Search} = Input
+  const { Search } = Input
 
-  return(
+  return (
     <SideBar>
-    <div className={styles.Agents}>
-      <Content>
-        <Layout>
-        <div >
-          <Space align="baseline">
-            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+      <div className={styles.Agents}>
+        <Content>
+          <Layout>
+            <div >
+              <Space align="baseline">
+                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
-              <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Agents</Title> 
-              </Form.Item>
+                  <Form.Item name="navtitle"  >
+                    <Title level={2} type="secondary" className={styles.spaceAlign}>Agents</Title>
+                  </Form.Item>
 
-              <Form.Item >
-                    <Search placeholder="Search" onSearch={value => console.log(value)} style={{ width: 200 }} className={styles.spaceAlign}/>
-              </Form.Item>
-              <Form.Item name="addOrder" >
-                  <a href="/home"><Title level={4} type="danger" className={styles.spaceAlign}>+ Add New Order</Title></a>
-              </Form.Item>
-              
-            </Form>
-          </Space>
-        </div>
-        </Layout>
+                  <Form.Item >
+                    <Search placeholder="Search.." size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign} />
+                  </Form.Item>
+                  <Form.Item name="addAgents" >
+                    <Button
+                      type="primary" danger
+                      size='large'
+                      onClick={() => {
+                        setVisible(true);
+                      }}
+                    >
+                      + Add New Agent
+                    </Button>
 
-        <Content  className={styles.Table}>
-          <Table columns={columns} dataSource={data} />
+                    <CollectionCreateForm
+                      visible={visible}
+                      onCreate={onCreate}
+                      onCancel={() => {
+                        setVisible(false);
+                      }}
+                    />
+                  </Form.Item>
+
+                </Form>
+              </Space>
+            </div>
+          </Layout>
+
+          <Content className={styles.Table}>
+            <Table columns={columns} dataSource={data} />
+          </Content>
         </Content>
-      </Content>
-  </div>
-  </SideBar>
+      </div>
+    </SideBar>
   )
 }
 

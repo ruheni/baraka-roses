@@ -1,14 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { Menu, Layout } from 'antd';
-import {
-  //MenuUnfoldOutlined,
- // MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined
-  //MailOutlined
-} from '@ant-design/icons';
+import { ContainerOutlined} from '@ant-design/icons';
 
 
 class SideBar extends React.Component {
@@ -37,7 +30,7 @@ class SideBar extends React.Component {
          <Layout>
          
           <Header style={{padding: 0}}>
-            <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal" theme='dark'>
+            <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal" theme="dark">
               <Menu.Item key="brand" style={{float: 'left'}}>
                 Baraka Roses
               </Menu.Item>
@@ -57,15 +50,14 @@ class SideBar extends React.Component {
           <Sider >
             <Menu
             defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
             mode="inline"
             theme="dark"
-            inlineCollapsed={this.state.collapsed}
+            /*inlineCollapsed={this.state.collapsed}*/
             style={{ minHeight: '95vh' }}>
-            <Menu.Item key="1" icon={<PieChartOutlined />}>
+            <Menu.Item key="1" icon={<ContainerOutlined />}>
               <Link to="/orders">Orders</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<DesktopOutlined />}>
+            <Menu.Item key="2" icon={<ContainerOutlined/>}>
               <Link to="/customers">Customers</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>

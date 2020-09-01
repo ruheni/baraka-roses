@@ -2,16 +2,12 @@ import React from 'react';
 import Signup from 'pages/SignUp/SignUp';
 import LogIn from 'pages/LogIn/LogIn';
 import ResetPass from 'pages/ResetPass/ResetPass';
-import SideBar from 'components/SideBar';
 import Orders from 'components/Orders';
 import Customers from 'components/Customers';
 import Agents from 'components/Agents';
-import Products from 'components/Products'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from "react-router-dom";
+import Products from 'components/Products';
+import Team from 'components/Team';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 
 
@@ -30,9 +26,6 @@ const AppRoutes = () => {
       <Route path="/reset">
         <ResetPass />
       </Route>
-      <Route path="/home">
-        <SideBar/>
-      </Route>
       <Route path="/orders">
         <Orders/>
       </Route>
@@ -44,6 +37,9 @@ const AppRoutes = () => {
       </Route>
       <Route path="/products">
         <Products/>
+      </Route>
+      <Route path="/team">
+        <Team/>
       </Route>
     </Switch>
   )

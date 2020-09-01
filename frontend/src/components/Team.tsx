@@ -1,9 +1,9 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Form, Input, Table, Space, Button, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Customers.module.css';
+import styles from 'components/Team.module.css';
 import SideBar from 'components/SideBar';
- 
+
 const columns = [
   {
     title: 'Name',
@@ -22,15 +22,15 @@ const columns = [
     key: 'email',
   },
   {
-    title: 'Location',
-    dataIndex: 'location',
-    key: 'location',
+    title: 'Role',
+    dataIndex: 'role',
+    key: 'role',
   },
   {
     title: 'Edit',
     dataIndex: 'edit',
     key: 'edit',
-    
+
   },
 ];
 
@@ -39,28 +39,28 @@ const data = [
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   }
 ];
@@ -70,8 +70,8 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   return (
     <Modal
       visible={visible}
-      title="Create New Customer"
-      okText="Create"
+      title="Add New Member"
+      okText="Add"
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -98,9 +98,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         <Form.Item
           name="name"
           label="Name: "
-          rules={[{ required: true, message: "Please input the customer's name" }]}
+          rules={[{ required: true, message: "Please input the member's name" }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Customer's Name" type="text"/>
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Member's Name" type="text"/>
         </Form.Item>
         
         <Form.Item
@@ -118,17 +118,21 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         </Form.Item>
 
         <Form.Item
-          name="location"
-          label="Location: "
+          name="role"
+          label="Role: "
         >
-          <Input  placeholder="Location" type="text"/>
+          <Input  placeholder="Role" type="text"/>
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-function Customers (props:any) {
+function Team() {
+
+  const [form] = Form.useForm();
+  const [, forceUpdate] = useState();
+
   const [visible, setVisible] = useState(false);
 
   const onCreate = (values: any) => {
@@ -136,10 +140,6 @@ function Customers (props:any) {
     setVisible(false);
   };
 
-  const [form] = Form.useForm();
-  const [, forceUpdate] = useState();
-
-  // To disable submit button at the beginning.
   useEffect(() => {
     forceUpdate({});
   }, []);
@@ -150,25 +150,25 @@ function Customers (props:any) {
 
   const { Title } = Typography;
   const { Content } = Layout;
-  const {Search} = Input
+  const { Search } = Input
 
-  return(
+  return (
     <SideBar>
-    <div className={styles.Customers}>
-      <Content>
-        <Layout>
-        <div >
-          <Space align="baseline">
-            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+      <div className={styles.Team}>
+        <Content>
+          <Layout>
+            <div >
+              <Space align="baseline">
+                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
-              <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Customers</Title> 
-              </Form.Item>
+                  <Form.Item name="navtitle"  >
+                    <Title level={2} type="secondary" className={styles.spaceAlign}>Team</Title>
+                  </Form.Item>
 
-              <Form.Item >
-                    <Search placeholder="Search" size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign}/>
-              </Form.Item>
-              <Form.Item name="addCustomer" >
+                  <Form.Item >
+                    <Search placeholder="Search.." size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign} />
+                  </Form.Item>
+                  <Form.Item name="addAgents" >
                     <Button
                       type="primary" danger
                       size='large'
@@ -176,7 +176,7 @@ function Customers (props:any) {
                         setVisible(true);
                       }}
                     >
-                      + Add New Customer
+                      + Add New Member
                     </Button>
 
                     <CollectionCreateForm
@@ -186,21 +186,21 @@ function Customers (props:any) {
                         setVisible(false);
                       }}
                     />
-              </Form.Item>
-              
-            </Form>
-          </Space>
-        </div>
-        </Layout>
+                  </Form.Item>
 
-        <Content  className={styles.Table}>
-          <Table columns={columns} dataSource={data} />
+                </Form>
+              </Space>
+            </div>
+          </Layout>
+
+          <Content className={styles.Table}>
+            <Table columns={columns} dataSource={data} />
+          </Content>
         </Content>
-      </Content>
-  </div>
-  </SideBar>
+      </div>
+    </SideBar>
   )
 }
 
 
-export default Customers;
+export default Team;
