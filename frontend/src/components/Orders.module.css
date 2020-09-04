@@ -1,0 +1,25 @@
+.Orders{
+    padding-top: 5vh;
+}
+
+.spaceAlign{
+    display: flex;
+    margin-right: 100px;
+    justify-content: center;
+}
+
+.Table{
+    min-width: 76vw;
+    display: inline-block;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 20px;
+}          
+button {
+    border: none;
+    cursor: pointer;
+    
+}
+.Entries{
+    margin-bottom: 7px;
+}

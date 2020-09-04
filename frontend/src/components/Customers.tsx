@@ -1,95 +1,76 @@
 import React, { useState, useEffect }  from 'react';
-import { Layout, Typography, Form, Input, Table, Tag, Space, Button, Modal } from 'antd';
-
+import { Layout, Typography, Form, Input, Table, Space, Button, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Orders.module.css';
-import SideBar from 'components/SideBar'
+import styles from 'components/Customers.module.css';
+import SideBar from 'components/SideBar';
  
 const columns = [
   {
-    title: 'Order ID',
-    dataIndex: 'orderid',
-    key: 'orderid',
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (text: any) => <a href="/home">{text}</a>,
   },
   {
-    title: 'Customer',
-    dataIndex: 'customer',
-    key: 'customer',
+    title: 'Phone Number',
+    dataIndex: 'phoneNumber',
+    key: 'phoneNumber',
   },
   {
-    title: 'Product',
-    dataIndex: 'product',
-    key: 'product',
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
   },
   {
-    title: 'Status',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags: any) => (
-      <>
-        {tags.map((tag: any) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'approved') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    title: 'Location',
+    dataIndex: 'location',
+    key: 'location',
   },
   {
-    title: 'Action',
-    key: 'action',
-    render: (text: any) => (
-      <Space size="middle">
-        <a href="/home">More-Info</a>
-      </Space>
-    ),
+    title: 'Edit',
+    dataIndex: 'edit',
+    key: 'edit',
+    
   },
 ];
 
 const data = [
   {
-    orderid: '12564763',
-    customer: 'Joe',
-    product: 'Tulips',
-    status: 'Approved',
-    tags: ['approved'],
+    name: 'Dead Pool',
+    phoneNumber: '+6021345689',
+    email: 'marvel@hotmail.com',
+    location: 'New York',
+    edit: 'edit',
   },
   {
-    orderid: '15668756',
-    customer: 'Peach',
-    product: 'Roses',
-    status: 'Denied',
-    tags: ['denied'],
+    name: 'Dead Pool',
+    phoneNumber: '+6021345689',
+    email: 'marvel@hotmail.com',
+    location: 'New York',
+    edit: 'edit',
   },
   {
-    orderid: '435353',
-    customer: 'Deadpool',
-    product: 'cabbage',
-    status: 'Approved',
-    tags: ['approved'],
+    name: 'Dead Pool',
+    phoneNumber: '+6021345689',
+    email: 'marvel@hotmail.com',
+    location: 'New York',
+    edit: 'edit',
   },
   {
-    orderid: '12564763',
-    customer: 'Joe',
-    product: 'Tulips',
-    status: 'Approved',
-    tags: ['approved'],
+    name: 'Dead Pool',
+    phoneNumber: '+6021345689',
+    email: 'marvel@hotmail.com',
+    location: 'New York',
+    edit: 'edit',
   }
-]
+];
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm();
   return (
     <Modal
       visible={visible}
-      title="Create New Order"
+      title="Create New Customer"
       okText="Create"
       cancelText="Cancel"
       onCancel={onCancel}
@@ -115,54 +96,50 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
       >
         
         <Form.Item
-          name="customer"
-          label="Customer: "
+          name="name"
+          label="Name: "
           rules={[{ required: true, message: "Please input the customer's name" }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
-        </Form.Item>
-
-        <Form.Item
-          name="product"
-          label="Products: "
-          rules={[{required: true, message: 'Please input the product name'}]}
-        >
-          <Input placeholder="Product Name" type="text"/>
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Customer's Name" type="text"/>
         </Form.Item>
         
         <Form.Item
-          name="entryDate"
-          label="Date: "
-          rules={[{ required: true, message: 'Please input the date' }]}
+          name="email"
+          label="Email Address: "
         >
-          <Input placeholder="Date of Entry" type="date"/>
+          <Input placeholder="Email Address" type="email"/>
         </Form.Item>
 
         <Form.Item
-          name="quantity"
-          label="Quantity: "
-          rules={[{ required: true, message: 'Please input the quantity' }]}
+          name="phoneNumber"
+          label="Phone Number: "
         >
-          <Input  placeholder="Quantity" type="number"/>
+          <Input placeholder="Phone Number" type="number"/>
+        </Form.Item>
+
+        <Form.Item
+          name="location"
+          label="Location: "
+        >
+          <Input  placeholder="Location" type="text"/>
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-
-function Orders () {
-
-  const [form] = Form.useForm();
-  const [, forceUpdate] = useState();
-
+function Customers (props:any) {
   const [visible, setVisible] = useState(false);
 
   const onCreate = (values: any) => {
     console.log('Received values of form: ', values);
     setVisible(false);
   };
-  
+
+  const [form] = Form.useForm();
+  const [, forceUpdate] = useState();
+
+  // To disable submit button at the beginning.
   useEffect(() => {
     forceUpdate({});
   }, []);
@@ -177,7 +154,7 @@ function Orders () {
 
   return(
     <SideBar>
-    <div className={styles.Orders}>
+    <div className={styles.Customers}>
       <Content>
         <Layout>
         <div >
@@ -185,22 +162,22 @@ function Orders () {
             <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
               <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Orders</Title> 
+                <Title level={2} type="secondary" className={styles.spaceAlign}>Customers</Title> 
               </Form.Item>
 
               <Form.Item >
                     <Search placeholder="Search" size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign}/>
               </Form.Item>
-              <Form.Item name="addOrder" >
-                <Button
+              <Form.Item name="addCustomer" >
+                    <Button
                       type="primary" danger
                       size='large'
                       onClick={() => {
                         setVisible(true);
                       }}
                     >
-                      + Add New Order
-                </Button>
+                      + Add New Customer
+                    </Button>
 
                     <CollectionCreateForm
                       visible={visible}
@@ -209,7 +186,6 @@ function Orders () {
                         setVisible(false);
                       }}
                     />
-                  
               </Form.Item>
               
             </Form>
@@ -227,4 +203,4 @@ function Orders () {
 }
 
 
-export default Orders;
+export default Customers;
