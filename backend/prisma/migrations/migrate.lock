@@ -1,0 +1,6 @@
+# Prisma Migrate lockfile v1
+
+20200627022502-project-init
+20200630225749-db-update-2
+20200709102801-postgres-db-added
+20200809144304-trying-to-fix-models-with-michael

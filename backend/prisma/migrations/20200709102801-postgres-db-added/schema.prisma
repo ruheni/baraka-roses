@@ -1,6 +1,6 @@
 datasource postgres {
   provider = "postgres"
-  url      = env("HEROKU_POSTGRESQL_OLIVE_URL")
+  url = "***"
 }
 
 model Customer {
@@ -16,37 +16,27 @@ model Customer {
 }
 
 model Order {
-  id              Int              @id @default(autoincrement())
-  status          OrderStatus
-  date            DateTime
-  Customer        Customer?        @relation(fields: [customerId], references: [id])
-  customerId      Int?
-  createdAt       DateTime         @default(now())
-  orderedProducts OrderedProduct[]
-  Product         Product[]
-}
-
-model OrderedProduct {
-  id              Int     @id @default(autoincrement())
-  product         Product @relation(fields: [productId], references: [id])
+  id              Int         @id @default(autoincrement())
   initialQuantity Int
   finalQuantity   Int
-  productId       Int
-  Order           Order?  @relation(fields: [orderId], references: [id])
-  orderId         Int?
+  status          OrderStatus
+  date            DateTime
+  Customer        Customer?   @relation(fields: [customerId], references: [id])
+  customerId      Int?
+  products        Product[]
+  createdAt       DateTime    @default(now())
 }
 
 model Product {
-  id             Int              @id @default(autoincrement())
-  color          Color
-  length         Int
-  grade          Grade
-  variety        String
-  quantity       Int
-  Order          Order?           @relation(fields: [orderId], references: [id])
-  orderId        Int?
-  createdAt      DateTime         @default(now())
-  OrderedProduct OrderedProduct[]
+  id        Int      @id @default(autoincrement())
+  color     Color
+  length    Int
+  grade     Grade
+  variety   String
+  quantity  Int
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
+  createdAt DateTime @default(now())
 }
 
 model Agent {

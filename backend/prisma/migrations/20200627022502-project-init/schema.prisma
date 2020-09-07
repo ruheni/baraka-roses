@@ -1,0 +1,86 @@
+datasource postgres {
+    provider = "postgres"
+    url = "***"
+}
+
+model Customer {
+    id             Int             @id @default(autoincrement())
+    name           String
+    contactName    String
+    market         String
+    email          String
+    phoneNumber    String
+    orders         Order[]
+    shippingAgents ShippingAgent[]
+}
+
+model Order {
+    id              Int         @id @default(autoincrement())
+    initialQuantity Int
+    finalQuantity   Int
+    status          OrderStatus
+    date            DateTime
+    Customer        Customer?   @relation(fields: [customerId], references: [id])
+    customerId      Int?
+    product         Product[]
+    createdAt       DateTime    @default(now())
+}
+
+model Product {
+    id       Int    @id @default(autoincrement())
+    color    Color
+    length   Int
+    grade    Grade
+    variety  String
+    quantity Int
+    Order    Order? @relation(fields: [orderId], references: [id])
+    orderId  Int?
+}
+
+model ShippingAgent {
+    id          Int       @id @default(autoincrement())
+    name        String
+    phoneNumber String
+    email       String
+    Customer    Customer? @relation(fields: [customerId], references: [id])
+    customerId  Int?
+}
+
+model User {
+    id        Int    @id @default(autoincrement())
+    firstName String
+    lastName  String
+    email     String
+    password  String
+    role      Role
+}
+
+enum Role {
+    SALES_EXEC
+    GENERAL_MANAGER
+    STOCK_CLERK
+    ADMIN
+}
+
+enum Grade {
+    GRADED
+    UNGRADED
+}
+
+enum Color {
+    WHITE
+    LILAC
+    PINK
+    CERISE
+    RED
+    ORANGE
+    YELLOW
+    PEACH
+    BI_COLOUR
+}
+
+enum OrderStatus {
+    PENDING
+    REVIEWED
+    CANCELLED
+}
