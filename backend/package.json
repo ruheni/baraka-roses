@@ -4,7 +4,6 @@
   "author": "Ruheni Alex",
   "description": "Baraka Roses Inventory management - GraphQL API using Nexus, Prisma and Postgresql",
   "license": "ISC",
-  "main": "index.js",
   "keywords": [
     "Nexus",
     "GraphQL",
@@ -15,12 +14,10 @@
   "scripts": {
     "dev": "nexus dev",
     "build": "nexus build",
-    "start": "node .nexus/build",
+    "start": "npm run build && node .nexus/build",
     "format": "npx prettier --write './**/*.{ts,md}'",
     "test": "jest"
   },
-  "author": "Ruheni Alex <aleruheni@outlook.com>",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
