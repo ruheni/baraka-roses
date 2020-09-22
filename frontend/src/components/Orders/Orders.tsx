@@ -1,9 +1,36 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import { Layout, Typography, Form, Input, Table, Tag, Space, Button, Modal } from 'antd';
-
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Orders.module.css';
-import SideBar from 'components/SideBar'
+import styles from 'components/Orders/Orders.module.css';
+import SideBar from 'components/SideBar/SideBar';
+import { useQuery, gql } from '@apollo/client';
+
+const getOrders = gql`
+query getOrders{
+  orders{
+    id
+    Customer{
+      name
+    }
+    orderedProducts{
+      product{
+        variety
+      }
+    }
+    status
+    orderedProducts{
+      product{
+        grade
+        color
+      }
+    }
+  }
+}
+`
+const { Title } = Typography;
+const { Content } = Layout;
+const {Search} = Input
+
  
 const columns = [
   {
@@ -53,7 +80,7 @@ const columns = [
   },
 ];
 
-const data = [
+/*const data = [
   {
     orderid: '12564763',
     customer: 'Joe',
@@ -82,7 +109,7 @@ const data = [
     status: 'Approved',
     tags: ['approved'],
   }
-]
+]*/
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm();
@@ -154,7 +181,6 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
 function Orders () {
 
   const [form] = Form.useForm();
-  const [, forceUpdate] = useState();
 
   const [visible, setVisible] = useState(false);
 
@@ -163,17 +189,15 @@ function Orders () {
     setVisible(false);
   };
   
-  useEffect(() => {
-    forceUpdate({});
-  }, []);
 
   const onFinish = (values: any) => {
     console.log('Finish:', values);
   };
 
-  const { Title } = Typography;
-  const { Content } = Layout;
-  const {Search} = Input
+  const { loading, error, data } = useQuery(getOrders);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   return(
     <SideBar>
@@ -218,7 +242,7 @@ function Orders () {
         </Layout>
 
         <Content  className={styles.Table}>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data.orders} />
         </Content>
       </Content>
   </div>

@@ -1,20 +1,50 @@
-import React, { useState, useEffect }  from 'react';
-import { Layout, Typography, Form, Input, Table, Tag, Space, Button, Modal } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Products.module.css';
-import SideBar from 'components/SideBar'
- 
+import React from 'react';
+import { Layout, Typography, Form, Input, Table, Space, Button} from 'antd';
+//import { UserOutlined } from '@ant-design/icons';
+import styles from 'components/Products/Products.module.css';
+import SideBar from 'components/SideBar/SideBar'
+import { useQuery, gql} from '@apollo/client';
+
+const GetProducts = gql`
+  query GetProducts{
+    products{
+      id
+      color
+      quantity
+      grade
+      variety
+    }
+  }
+`;
+
+/*const ADD_PRODUCT = gql`
+mutation AddProducts($color: Color!, $quantity: Int!, $grade: Grade!, $variety: String!,$length: Int!) {
+    createProduct(color: $color, quantity: $quantity,  grade: $grade, variety: $variety, length: $length) {
+      id
+      color
+      quantity
+      grade
+      variety
+      length
+      createdAt
+    }
+}
+`;*/
+
+const { Title } = Typography;
+const { Content } = Layout;
+const { Search } = Input
+
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text: any) => <a href="/home">{text}</a>,
+    dataIndex: 'id',
+    key: 'id',
   },
   {
     title: 'Colour',
-    dataIndex: 'colour',
-    key: 'colour',
+    dataIndex: 'color',
+    key: 'color',
   },
   {
     title: 'Quantity',
@@ -23,24 +53,10 @@ const columns = [
   },
   {
     title: 'Grade',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags: any) => (
-      <>
-        {tags.map((tag: any) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'graded') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    dataIndex: 'grade',
+    key: 'grade',
   },
+ 
   {
     title: 'Variety',
     dataIndex: 'variety',
@@ -51,13 +67,14 @@ const columns = [
     key: 'edit',
     render: (text: any) => (
       <Space size="middle">
-        <a href="/home">edit</a>
+        <a href="/new">edit</a>
       </Space>
     ),
   },
 ];
 
-const data = [
+
+/*const dummyData = [
   {
     name: 'Mando the Warrior',
     colour: 'yellow',
@@ -67,37 +84,12 @@ const data = [
     variety: 'roses',
     edit: 'edit'
   },
-  {
-    name: 'Mando the Warrior',
-    colour: 'yellow',
-    quantity: 50,
-    grade: 'graded',
-    tags: ['graded'],
-    variety: 'roses',
-    edit: 'edit'
-  },
-  {
-    name: 'Mando the Warrior',
-    colour: 'yellow',
-    quantity: 50,
-    grade: 'ungraded',
-    tags: ['ungraded'],
-    variety: 'roses',
-    edit: 'edit'
-  },
-  {
-    name: 'Mando the Warrior',
-    colour: 'yellow',
-    quantity: 50,
-    grade: 'graded',
-    tags: ['graded'],
-    variety: 'roses',
-    edit: 'edit'
-  }
 ];
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm();
+  const [createProducts] = useMutation(ADD_PRODUCT);
+
   return (
     <Modal
       visible={visible}
@@ -109,8 +101,19 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         form
           .validateFields()
           .then(values => {
-            form.resetFields();
+            // form.resetFields();
             onCreate(values);
+            let {quantity, length} = values
+            
+            values.quantity = parseInt(quantity)
+            values.length = parseInt(length)
+            createProducts({ variables: { 
+              color: values.color,
+              grade: values.grade,
+              length: values.length,
+              variety: values.variety,
+              quantity: values.quantity
+             } });
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -125,20 +128,12 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
           modifier: 'public',
         }}
       >
-        
+              
         <Form.Item
-          name="productName"
-          label="Name: "
-          rules={[{ required: true, message: 'Please input the product name' }]}
+          name="color"
+          label="Color: "
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
-        </Form.Item>
-
-        <Form.Item
-          name="colour"
-          label="Colour: "
-        >
-          <Input placeholder="Colour" type="text"/>
+          <Input placeholder="Color" type="text"/>
         </Form.Item>
 
         <Form.Item
@@ -148,6 +143,13 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
           <Input placeholder="Grade" type="text"/>
         </Form.Item>
 
+        <Form.Item
+          name="length"
+          label="Length: "
+        >
+          <Input placeholder="Length" type="number"/>
+        </Form.Item>
+        
         <Form.Item
           name="variety"
           label="variety: "
@@ -166,32 +168,29 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
       </Form>
     </Modal>
   );
-};
+};*/
 
 
-function Products(props:any) {
-  const [visible, setVisible] = useState(false);
+function Products() {
+  //const [visible, setVisible] = useState(false);
 
-  const onCreate = (values: any) => {
+  /*const onCreate = (values: any) => {
     console.log('Received values of form: ', values);
     setVisible(false);
-  };
+  };*/
 
   const [form] = Form.useForm();
-  const [, forceUpdate] = useState();
-
-  // To disable submit button at the beginning.
-  useEffect(() => {
-    forceUpdate({});
-  }, []);
 
   const onFinish = (values: any) => {
     console.log('Finish:', values);
   };
 
-  const { Title } = Typography;
-  const { Content } = Layout;
-  const { Search } = Input
+  const { loading, error, data } = useQuery(GetProducts);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :( </p>;
+
+  console.log(data);
 
   return(
     <SideBar>
@@ -213,20 +212,19 @@ function Products(props:any) {
                     <Button
                       type="primary" danger
                       size='large'
-                      onClick={() => {
-                        setVisible(true);
-                      }}
+                      
+                      href="/new"
                     >
                       + Add New Products
                     </Button>
 
-                    <CollectionCreateForm
+                    {/*<CollectionCreateForm
                       visible={visible}
                       onCreate={onCreate}
                       onCancel={() => {
                         setVisible(false);
                       }}
-                    />
+                    />*/}
                   
               </Form.Item>
               
@@ -236,7 +234,7 @@ function Products(props:any) {
         </Layout>
 
         <Content  className={styles.Table}>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data.products} />
         </Content>
       </Content>
   </div>

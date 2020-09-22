@@ -2,13 +2,21 @@ import React from 'react';
 import Signup from 'pages/SignUp/SignUp';
 import LogIn from 'pages/LogIn/LogIn';
 import ResetPass from 'pages/ResetPass/ResetPass';
-import Orders from 'components/Orders';
-import Customers from 'components/Customers';
-import Agents from 'components/Agents';
-import Products from 'components/Products';
-import Team from 'components/Team';
+import Orders from 'components/Orders/Orders';
+import Customers from 'components/Customers/Customers';
+import Agents from 'components/Agents/Agents';
+import Products from 'components/Products/Products';
+import Team from 'components/Team/Team';
+import Dashboard from 'pages/Dashboard/Dashboard';
+import NewProduct from 'pages/newProduct/newProduct';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
+import { ApolloClient, InMemoryCache, ApolloProvider  } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'https://baraka-roses-backend.azurewebsites.net/graphql',
+  cache: new InMemoryCache()
+});
 
 
 const AppRoutes = () => {
@@ -38,8 +46,14 @@ const AppRoutes = () => {
       <Route path="/products">
         <Products/>
       </Route>
+      <Route path="/dashboard">
+        <Dashboard/>
+      </Route>
       <Route path="/team">
         <Team/>
+      </Route>
+      <Route path="/new">
+        <NewProduct/>
       </Route>
     </Switch>
   )
@@ -47,11 +61,13 @@ const AppRoutes = () => {
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <AppRoutes />
-      </div>
-    </Router>
+    <ApolloProvider client={client}>
+      <Router>
+        <div className="App">
+          <AppRoutes />
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 

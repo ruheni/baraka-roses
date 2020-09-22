@@ -1,9 +1,25 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Form, Input, Table, Space, Button, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Customers.module.css';
-import SideBar from 'components/SideBar';
- 
+import styles from 'components/Agents/Agents.module.css';
+import SideBar from 'components/SideBar/SideBar';
+import { useQuery, gql } from '@apollo/client';
+
+const GetAgents = gql`
+query getAgents{
+  agents{
+    name
+    phoneNumber
+    email
+    createdAt
+  }
+}
+`
+
+const { Title } = Typography;
+const { Content } = Layout;
+const { Search } = Input;
+
 const columns = [
   {
     title: 'Name',
@@ -22,19 +38,13 @@ const columns = [
     key: 'email',
   },
   {
-    title: 'Location',
-    dataIndex: 'location',
-    key: 'location',
-  },
-  {
-    title: 'Edit',
-    dataIndex: 'edit',
-    key: 'edit',
-    
+    title: 'Date Created',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
   },
 ];
 
-const data = [
+/*const data = [
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
@@ -63,15 +73,15 @@ const data = [
     location: 'New York',
     edit: 'edit',
   }
-];
+];*/
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm();
   return (
     <Modal
       visible={visible}
-      title="Create New Customer"
-      okText="Create"
+      title="Add New Agent"
+      okText="Add"
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -98,9 +108,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         <Form.Item
           name="name"
           label="Name: "
-          rules={[{ required: true, message: "Please input the customer's name" }]}
+          rules={[{ required: true, message: "Please input the agent's name" }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Customer's Name" type="text"/>
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
         </Form.Item>
         
         <Form.Item
@@ -128,7 +138,11 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   );
 };
 
-function Customers (props:any) {
+function Agents() {
+
+  const [form] = Form.useForm();
+  const [, forceUpdate] = useState();
+
   const [visible, setVisible] = useState(false);
 
   const onCreate = (values: any) => {
@@ -136,10 +150,6 @@ function Customers (props:any) {
     setVisible(false);
   };
 
-  const [form] = Form.useForm();
-  const [, forceUpdate] = useState();
-
-  // To disable submit button at the beginning.
   useEffect(() => {
     forceUpdate({});
   }, []);
@@ -148,27 +158,28 @@ function Customers (props:any) {
     console.log('Finish:', values);
   };
 
-  const { Title } = Typography;
-  const { Content } = Layout;
-  const {Search} = Input
+  const { loading, error, data } = useQuery(GetAgents);
 
-  return(
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return (
     <SideBar>
-    <div className={styles.Customers}>
-      <Content>
-        <Layout>
-        <div >
-          <Space align="baseline">
-            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+      <div className={styles.Agents}>
+        <Content>
+          <Layout>
+            <div >
+              <Space align="baseline">
+                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
-              <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Customers</Title> 
-              </Form.Item>
+                  <Form.Item name="navtitle"  >
+                    <Title level={2} type="secondary" className={styles.spaceAlign}>Agents</Title>
+                  </Form.Item>
 
-              <Form.Item >
-                    <Search placeholder="Search" size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign}/>
-              </Form.Item>
-              <Form.Item name="addCustomer" >
+                  <Form.Item >
+                    <Search placeholder="Search.." size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign} />
+                  </Form.Item>
+                  <Form.Item name="addAgents" >
                     <Button
                       type="primary" danger
                       size='large'
@@ -176,7 +187,7 @@ function Customers (props:any) {
                         setVisible(true);
                       }}
                     >
-                      + Add New Customer
+                      + Add New Agent
                     </Button>
 
                     <CollectionCreateForm
@@ -186,21 +197,21 @@ function Customers (props:any) {
                         setVisible(false);
                       }}
                     />
-              </Form.Item>
-              
-            </Form>
-          </Space>
-        </div>
-        </Layout>
+                  </Form.Item>
 
-        <Content  className={styles.Table}>
-          <Table columns={columns} dataSource={data} />
+                </Form>
+              </Space>
+            </div>
+          </Layout>
+
+          <Content className={styles.Table}>
+            <Table columns={columns} dataSource={data.agents} />
+          </Content>
         </Content>
-      </Content>
-  </div>
-  </SideBar>
+      </div>
+    </SideBar>
   )
 }
 
 
-export default Customers;
+export default Agents;

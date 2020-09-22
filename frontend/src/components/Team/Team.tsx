@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Form, Input, Table, Space, Button, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Agents.module.css';
-import SideBar from 'components/SideBar';
+import styles from 'components/Team/Team.module.css';
+import SideBar from 'components/SideBar/SideBar';
 
 const columns = [
   {
@@ -22,9 +22,9 @@ const columns = [
     key: 'email',
   },
   {
-    title: 'Location',
-    dataIndex: 'location',
-    key: 'location',
+    title: 'Role',
+    dataIndex: 'role',
+    key: 'role',
   },
   {
     title: 'Edit',
@@ -39,28 +39,28 @@ const data = [
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    location: 'New York',
+    role: 'Manager',
     edit: 'edit',
   }
 ];
@@ -70,7 +70,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   return (
     <Modal
       visible={visible}
-      title="Add New Agent"
+      title="Add New Member"
       okText="Add"
       cancelText="Cancel"
       onCancel={onCancel}
@@ -98,9 +98,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         <Form.Item
           name="name"
           label="Name: "
-          rules={[{ required: true, message: "Please input the agent's name" }]}
+          rules={[{ required: true, message: "Please input the member's name" }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Member's Name" type="text"/>
         </Form.Item>
         
         <Form.Item
@@ -118,17 +118,17 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         </Form.Item>
 
         <Form.Item
-          name="location"
-          label="Location: "
+          name="role"
+          label="Role: "
         >
-          <Input  placeholder="Location" type="text"/>
+          <Input  placeholder="Role" type="text"/>
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-function Agents() {
+function Team() {
 
   const [form] = Form.useForm();
   const [, forceUpdate] = useState();
@@ -154,7 +154,7 @@ function Agents() {
 
   return (
     <SideBar>
-      <div className={styles.Agents}>
+      <div className={styles.Team}>
         <Content>
           <Layout>
             <div >
@@ -162,7 +162,7 @@ function Agents() {
                 <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
                   <Form.Item name="navtitle"  >
-                    <Title level={2} type="secondary" className={styles.spaceAlign}>Agents</Title>
+                    <Title level={2} type="secondary" className={styles.spaceAlign}>Team</Title>
                   </Form.Item>
 
                   <Form.Item >
@@ -176,7 +176,7 @@ function Agents() {
                         setVisible(true);
                       }}
                     >
-                      + Add New Agent
+                      + Add New Member
                     </Button>
 
                     <CollectionCreateForm
@@ -203,4 +203,4 @@ function Agents() {
 }
 
 
-export default Agents;
+export default Team;

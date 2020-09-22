@@ -43,9 +43,6 @@ class SideBar extends React.Component {
               </Menu.Item>
             </Menu>
           </Header>
-        
-
-
           <Layout>
           <Sider >
             <Menu

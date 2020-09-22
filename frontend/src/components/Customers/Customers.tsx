@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState}  from 'react';
 import { Layout, Typography, Form, Input, Table, Space, Button, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Team.module.css';
-import SideBar from 'components/SideBar';
+import styles from 'components/Customers/Customers.module.css';
+import SideBar from 'components/SideBar/SideBar';
+import { useQuery, gql } from '@apollo/client';
+
+const GetCustomers = gql`
+  query getCustomers{
+    customers{
+      name
+      phoneNumber
+      email
+      market
+    }
+}
+` 
+const { Title } = Typography;
+const { Content } = Layout;
+const {Search} = Input;
 
 const columns = [
   {
@@ -22,56 +37,51 @@ const columns = [
     key: 'email',
   },
   {
-    title: 'Role',
-    dataIndex: 'role',
-    key: 'role',
+    title: 'Location',
+    dataIndex: 'market',
+    key: 'location',
   },
-  {
-    title: 'Edit',
-    dataIndex: 'edit',
-    key: 'edit',
-
-  },
+  
 ];
 
-const data = [
+/*const data = [
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    role: 'Manager',
+    location: 'New York',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    role: 'Manager',
+    location: 'New York',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    role: 'Manager',
+    location: 'New York',
     edit: 'edit',
   },
   {
     name: 'Dead Pool',
     phoneNumber: '+6021345689',
     email: 'marvel@hotmail.com',
-    role: 'Manager',
+    location: 'New York',
     edit: 'edit',
   }
-];
+];*/
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
   const [form] = Form.useForm();
   return (
     <Modal
       visible={visible}
-      title="Add New Member"
-      okText="Add"
+      title="Create New Customer"
+      okText="Create"
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -98,9 +108,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         <Form.Item
           name="name"
           label="Name: "
-          rules={[{ required: true, message: "Please input the member's name" }]}
+          rules={[{ required: true, message: "Please input the customer's name" }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Member's Name" type="text"/>
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Customer's Name" type="text"/>
         </Form.Item>
         
         <Form.Item
@@ -118,21 +128,17 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }: any) => {
         </Form.Item>
 
         <Form.Item
-          name="role"
-          label="Role: "
+          name="location"
+          label="Location: "
         >
-          <Input  placeholder="Role" type="text"/>
+          <Input  placeholder="Location" type="text"/>
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-function Team() {
-
-  const [form] = Form.useForm();
-  const [, forceUpdate] = useState();
-
+function Customers (props:any) {
   const [visible, setVisible] = useState(false);
 
   const onCreate = (values: any) => {
@@ -140,35 +146,34 @@ function Team() {
     setVisible(false);
   };
 
-  useEffect(() => {
-    forceUpdate({});
-  }, []);
+  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     console.log('Finish:', values);
   };
 
-  const { Title } = Typography;
-  const { Content } = Layout;
-  const { Search } = Input
+  const { loading, error, data } = useQuery(GetCustomers);
 
-  return (
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return(
     <SideBar>
-      <div className={styles.Team}>
-        <Content>
-          <Layout>
-            <div >
-              <Space align="baseline">
-                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+    <div className={styles.Customers}>
+      <Content>
+        <Layout>
+        <div >
+          <Space align="baseline">
+            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
-                  <Form.Item name="navtitle"  >
-                    <Title level={2} type="secondary" className={styles.spaceAlign}>Team</Title>
-                  </Form.Item>
+              <Form.Item name="navtitle"  >
+                <Title level={2} type="secondary" className={styles.spaceAlign}>Customers</Title> 
+              </Form.Item>
 
-                  <Form.Item >
-                    <Search placeholder="Search.." size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign} />
-                  </Form.Item>
-                  <Form.Item name="addAgents" >
+              <Form.Item >
+                    <Search placeholder="Search" size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign}/>
+              </Form.Item>
+              <Form.Item name="addCustomer" >
                     <Button
                       type="primary" danger
                       size='large'
@@ -176,7 +181,7 @@ function Team() {
                         setVisible(true);
                       }}
                     >
-                      + Add New Member
+                      + Add New Customer
                     </Button>
 
                     <CollectionCreateForm
@@ -186,21 +191,21 @@ function Team() {
                         setVisible(false);
                       }}
                     />
-                  </Form.Item>
+              </Form.Item>
+              
+            </Form>
+          </Space>
+        </div>
+        </Layout>
 
-                </Form>
-              </Space>
-            </div>
-          </Layout>
-
-          <Content className={styles.Table}>
-            <Table columns={columns} dataSource={data} />
-          </Content>
+        <Content className={styles.Table}>
+          <Table columns={columns} dataSource={data.customers} />
         </Content>
-      </div>
-    </SideBar>
+      </Content>
+  </div>
+  </SideBar>
   )
 }
 
 
-export default Team;
+export default Customers;
