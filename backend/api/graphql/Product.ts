@@ -63,11 +63,11 @@ schema.extendType({
 			args: {
 				color: schema.arg({
 					type: 'Color',
-					required: true,
+					nullable: false,
 				}),
 				grade: schema.arg({
 					type: 'Grade',
-					required: true,
+					nullable: false,
 				}),
 				length: schema.intArg({ nullable: false }),
 				variety: schema.stringArg({ nullable: false }),
@@ -90,14 +90,14 @@ schema.extendType({
 		t.field('updateProduct', {
 			type: 'Product',
 			args: {
-				id: schema.intArg({ required: true }),
+				id: schema.intArg({ nullable: false }),
 				color: schema.arg({
 					type: 'Color',
-					required: true,
+					nullable: false,
 				}),
 				grade: schema.arg({
 					type: 'Grade',
-					required: true,
+					nullable: false,
 				}),
 				length: schema.intArg({ nullable: false }),
 				variety: schema.stringArg({ nullable: false }),

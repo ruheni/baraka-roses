@@ -46,17 +46,17 @@ schema.extendType({
 		t.field('createAgent', {
 			type: 'Agent',
 			args: {
-				name: schema.stringArg({ required: true }),
-				phoneNumber: schema.stringArg({ required: true }),
-				email: schema.stringArg({ required: true }),
-				customerId: schema.intArg({ required: true }),
+				name: schema.stringArg({ nullable: false }),
+				phoneNumber: schema.stringArg({ nullable: false }),
+				email: schema.stringArg({ nullable: false }),
+				customerId: schema.intArg({ nullable: false }),
 			},
 			resolve: async (_root, { name, email, phoneNumber, customerId }, ctx) => {
 				const agent = await ctx.db.agent.create({
 					data: {
-						name: name,
-						email: email,
-						phoneNumber: phoneNumber,
+						name,
+						email,
+						phoneNumber,
 						Customer: {
 							connect: { id: customerId },
 						},
@@ -78,12 +78,12 @@ schema.extendType({
 			resolve: async (_root, { name, email, phoneNumber, id }, ctx) => {
 				const agent = await ctx.db.agent.update({
 					where: {
-						id: id,
+						id
 					},
 					data: {
-						name: name,
-						phoneNumber: name,
-						email: phoneNumber,
+						name,
+						phoneNumber,
+						email,
 					},
 				})
 				return agent

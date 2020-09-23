@@ -36,7 +36,7 @@ schema.extendType({
 			args: {
 				status: schema.arg({
 					type: 'OrderStatus',
-					required: true,
+					nullable: false,
 				}),
 			},
 			resolve: async (_root, { status }, ctx) => {
@@ -95,7 +95,7 @@ schema.extendType({
 		t.field('updateOrder', {
 			type: 'Order',
 			args: {
-				id: schema.intArg({ required: true }),
+				id: schema.intArg({ nullable: false }),
 				finalQuantity: schema.intArg({ nullable: false }),
 				status: schema.arg({
 					type: 'OrderStatus',

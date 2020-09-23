@@ -142,7 +142,7 @@ scalar Json
 
 type Mutation {
   createAgent(customerId: Int!, email: String!, name: String!, phoneNumber: String!): Agent
-  createCustomer(agentIds: [Int!]!, contactName: String!, email: String!, market: String!, name: String!, phoneNumber: String!): Customer!
+  createCustomer(agentIds: [Int!], contactName: String!, email: String!, market: String!, name: String!, phoneNumber: String!): Customer!
   createOrder(customerId: Int!, date: String!, productIds: [Int!]!): Order
   createProduct(color: Color!, grade: Grade!, length: Int!, quantity: Int!, variety: String!): Product
   login(email: String!, password: String!): AuthPayload

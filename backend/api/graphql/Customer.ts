@@ -37,7 +37,7 @@ schema.extendType({
 		t.field('customerProfile', {
 			type: 'Customer',
 			args: {
-				id: schema.intArg({ required: true }),
+				id: schema.intArg({ nullable: false }),
 			},
 			resolve: async (_root, { id }, ctx) => {
 				const customer = await ctx.db.customer.findOne({
@@ -57,15 +57,15 @@ schema.extendType({
 			type: 'Customer',
 			nullable: false,
 			args: {
-				name: schema.stringArg({ required: true }),
-				contactName: schema.stringArg({ required: true }),
-				market: schema.stringArg({ required: true }),
-				email: schema.stringArg({ required: true }),
-				phoneNumber: schema.stringArg({ required: true }),
-				agentIds: schema.intArg({ nullable: false, list: true }),
+				name: schema.stringArg({ nullable: false }),
+				contactName: schema.stringArg({ nullable: false }),
+				market: schema.stringArg({ nullable: false }),
+				email: schema.stringArg({ nullable: false }),
+				phoneNumber: schema.stringArg({ nullable: false }),
+				agentIds: schema.intArg({ nullable: true, list: true }),
 			},
 			resolve: async (_root, { name, contactName, market, email, phoneNumber, agentIds }, ctx) => {
-				const ids = agentIds.map((id: any) => ({ id }))
+				const ids = agentIds?.map((id: any) => ({ id }))
 				const customer = await ctx.db.customer.create({
 					data: {
 						name: name,
@@ -85,7 +85,7 @@ schema.extendType({
 			type: 'Customer',
 			nullable: false,
 			args: {
-				id: schema.intArg({ required: true }),
+				id: schema.intArg({ nullable: false }),
 				name: schema.stringArg({ nullable: false }),
 				contactName: schema.stringArg({ nullable: false }),
 				market: schema.stringArg({ nullable: false }),
