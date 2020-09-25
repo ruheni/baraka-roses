@@ -15,24 +15,20 @@
     font-weight: 800;
     font-size: 36px;
     line-height: 54px;
-    /* identical to box height */
     color: #FFFFFF;
     
 }
 
 .inputForm{
     position: absolute;
-    width: 46vw;
-    height: 60vh;
+    width: 40vw;
+    height: 57vh;
     left: 47vw;
     top: 40vh;
-    padding-top: 50px;
+    padding-top: 35px;
     padding-left: 40px;
-    padding-right: 50px;
-    padding-bottom: 10px;
+    padding-right: 100px;
     background: #FFFFFF;
-    border-top-left-radius: 61px;
-    border-top-right-radius: 61px;
 }
 
 .inputForm h1{
@@ -41,8 +37,7 @@
     font-weight: bold;
     font-size: 36px;
     color: #EB2536;
-    text-align: left;
-    padding-left: 5%;
+    
 }
 
 .inputEntry{
@@ -64,36 +59,17 @@
 .forgotTxt{
     text-decoration: none;
     color: #EB2536;
-    padding-left: 60%;
 }
 
-.loginBtn{
-    margin-top: 6vh;
-    background: #EB2536;
-    border-radius: 18px;
-    width: 35vw;
-    height: 9vh;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 28px;
-    line-height: 45px;
-}
-
-@media(max-width: 768px){
-    .forgotTxt{
-        position: absolute;
-        top: 27vh;
-        right: 45%;
-        clear: both;
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        margin-top: 5px; 
-    }
-}
 
 @media (min-width: 1440px){
     .inputForm h1{
-        padding-left: 9%;
+        padding-left: 24%;
     }  
+    .inputForm{
+        width: 35vw;
+        left: 50vw;
+        padding-left: 0px;
+        padding-top: 60px;
+    }    
 }

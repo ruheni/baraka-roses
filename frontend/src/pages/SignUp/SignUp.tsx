@@ -1,47 +1,76 @@
-import React from 'react';
+import React from "react";
 import styles from './SignUp.module.css';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-function Signup() {
+const NewLogin = () => {
+  const onFinish = (values:any) => {
+    console.log('Received values of form: ', values);
+  };
+
   return (
     <div className={styles.Signup}>
-      <h1 className= {styles.mainTitle} >Baraka Flowers</h1>
+      <h1 className={styles.mainTitle}>Baraka Flowers</h1>
 
       <div className={styles.inputForm}>
-          <Form>
-              <h1>Sign Up as Admin</h1>
-              <FormGroup>
-                <Input className={styles.inputEntry} type="text" name="first_name" id="firstName" placeholder="First Name" />
-              </FormGroup>
+        <h1>Sign Up</h1>
+      <Form
+        name="signup_form"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          name="firstname"
+          rules={[{ required: true, message: 'Please input your First Name!' }]}
+        >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="First Name" />
+        </Form.Item>
+        
+        <Form.Item
+          name="lastname"
+          rules={[{ required: true, message: 'Please input your Last Name!' }]}
+        >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Last Name" />
+        </Form.Item>
 
-              <FormGroup>
-                <Input className={styles.inputEntry} type="text" name="last_name" id="lastName" placeholder="Last Name" />
-              </FormGroup>
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: 'Please input your E-mail!' }]}
+        >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="E-mail" />
+        </Form.Item>
 
-              <FormGroup>
-                <Input className={styles.inputEntry} type="email" name="email" id="Email" placeholder="Email" />
-              </FormGroup>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: 'Please input your Password!' }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
 
-              <FormGroup>
-                <Input className={styles.inputEntry} type="password" name="pass" id="Pass" placeholder="Password" />
-              </FormGroup>
+        <Form.Item
+          name="confirm_password"
+          rules={[{ required: true, message: 'Please confirm password!' }]}
+        >
+          <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Confirm Password" />
+        </Form.Item>
 
-              <FormGroup>
-                <Input className={styles.inputEntry} type="password" name="confirmPass" id="confirmPass" placeholder="Confirm Password" />
-              </FormGroup>
+        <Form.Item name="remember" valuePropName="checked" noStyle className={styles.checkBox}>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
 
-              <FormGroup check className={styles.checkBox}>
-                <Label check>
-                <Input type="checkbox" />{' '}
-                Remember me!
-                </Label>
-              </FormGroup>
-
-            <Button className={styles.signupBtn}>Sign Up</Button>
-          </Form>
+        <Form.Item>
+          <Button type="primary" danger className={styles.signupBtn}>
+            Sign Up
+          </Button>
+        </Form.Item>
+      </Form>
       </div>
-    </div>
+      </div>
   );
-}
+};
 
-export default Signup;
+export default NewLogin;

@@ -31,8 +31,6 @@
     padding-right: 50px;
     padding-bottom: 10px;
     background: #FFFFFF;
-    border-top-left-radius: 61px;
-    border-top-right-radius: 61px;
 }
 
 .inputForm h1{
@@ -45,14 +43,6 @@
     padding-left: 5%;
 }
 
-.inputEntry{
-    margin-top: 2vh;
-    display: inline-block;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 35vw;
-}
-
 .checkBox{
     position: absolute;
     left: 13%;
@@ -62,15 +52,7 @@
 }
 
 .signupBtn{
-    margin-top: 6vh;
-    background: #EB2536;
-    border-radius: 18px;
-    width: 35vw;
-    height: 9vh;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 28px;
-    line-height: 45px;
+    margin-top: 3vh;    
 
 }
 

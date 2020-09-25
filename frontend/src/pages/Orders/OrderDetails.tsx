@@ -1,12 +1,14 @@
 import React from 'react';
 import { Layout, Typography, Form, Input, Space, Button } from 'antd';
-import styles from 'components/Products/Products.module.css';
+import { UserOutlined } from '@ant-design/icons';
+import styles from 'pages/Orders/Orders.module.css';
 import SideBar from 'components/SideBar/SideBar'
 import { gql, useMutation } from '@apollo/client';
 
-const ADD_PRODUCT = gql`
-mutation AddProducts($color: Color!, $quantity: Int!, $grade: Grade!, $variety: String!,$length: Int!) {
-    createProduct(color: $color, quantity: $quantity,  grade: $grade, variety: $variety, length: $length) {
+const ADD_ORDER = gql`
+mutation AddOrder(
+    $customerId: Int!, $productIds: [Int!], $date: String!) {
+    createAgent(color: $color, quantity: $quantity,  grade: $grade, variety: $variety, length: $length) {
       id
       color
       quantity
@@ -24,7 +26,7 @@ const { Content } = Layout;
 
 const CollectionCreateForm = ({onCreate}:any) => {
   const [form] = Form.useForm();
-  const [createProducts] = useMutation(ADD_PRODUCT);
+  const [createOrders] = useMutation(ADD_ORDER);
 
   const onFinish=(e: any) => {
     e.preventDefault();
@@ -32,12 +34,8 @@ const CollectionCreateForm = ({onCreate}:any) => {
       .validateFields()
       .then(values => {
         onCreate(values);
-        let {quantity, length} = values
-        
-        values.quantity = parseInt(quantity)
-        values.length = parseInt(length)
 
-        createProducts({ variables: { 
+        createOrders({ variables: { 
           color: values.color,
           grade: values.grade,
           length: values.length,
@@ -54,40 +52,34 @@ const CollectionCreateForm = ({onCreate}:any) => {
     <Form
         form={form}
         layout="horizontal"
-        name="add_product_form"
+        name="form_in_modal"
         initialValues={{
           modifier: 'public',
         }}
-        onFinish={onFinish}
       >
-              
+        
         <Form.Item
-          name="color"
-          label="Color: "
+          name="customer"
+          label="Customer: "
+          rules={[{ required: true, message: "Please input the customer's name" }]}
         >
-          <Input placeholder="Color" type="text"/>
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
         </Form.Item>
 
         <Form.Item
-          name="grade"
-          label="Grade: "
+          name="product"
+          label="Products: "
+          rules={[{required: true, message: 'Please input the product name'}]}
         >
-          <Input placeholder="Grade" type="text"/>
-        </Form.Item>
-
-        <Form.Item
-          name="length"
-          label="Length: "
-        >
-          <Input placeholder="Length" type="number"/>
+          <Input placeholder="Product Name" type="text"/>
         </Form.Item>
         
         <Form.Item
-          name="variety"
-          label="variety: "
-          rules={[{required: true, message: 'Please input the product name'}]}
+          name="entryDate"
+          label="Date: "
+          rules={[{ required: true, message: 'Please input the date' }]}
         >
-          <Input placeholder="Variety" type="text"/>
+          <Input placeholder="Date of Entry" type="date"/>
         </Form.Item>
 
         <Form.Item
@@ -99,7 +91,7 @@ const CollectionCreateForm = ({onCreate}:any) => {
         </Form.Item>
 
         <Form.Item>
-            <Button type="primary" href='/new' onClick={ onFinish } >
+            <Button type="primary" href='/agents' onClick={ onFinish } >
                 Submit
             </Button>
         </Form.Item>
@@ -108,7 +100,7 @@ const CollectionCreateForm = ({onCreate}:any) => {
 };
 
 
-function NewProduct() {
+function NewOrder() {
 
   const [form] = Form.useForm();
 
@@ -123,7 +115,7 @@ function NewProduct() {
 
   return(
     <SideBar>
-    <div className={styles.Products}>
+    <div className={styles.Orders}>
       <Content>
         <Layout>
         <div >
@@ -131,7 +123,7 @@ function NewProduct() {
             <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
 
               <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Add New Product</Title> 
+                <Title level={2} type="secondary" className={styles.spaceAlign}>Add New Order</Title> 
               </Form.Item>
               
             </Form>
@@ -149,4 +141,4 @@ function NewProduct() {
 }
 
 
-export default NewProduct;
+export default NewOrder;

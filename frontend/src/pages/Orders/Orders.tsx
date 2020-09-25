@@ -1,7 +1,7 @@
 import React, { useState }  from 'react';
 import { Layout, Typography, Form, Input, Table, Tag, Space, Button, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from 'components/Orders/Orders.module.css';
+import styles from 'pages/Orders/Orders.module.css';
 import SideBar from 'components/SideBar/SideBar';
 import { useQuery, gql } from '@apollo/client';
 
