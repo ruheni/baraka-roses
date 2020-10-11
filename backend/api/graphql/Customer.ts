@@ -68,11 +68,11 @@ schema.extendType({
 				const ids = agentIds?.map((id: any) => ({ id }))
 				const customer = await ctx.db.customer.create({
 					data: {
-						name: name,
-						contactName: contactName,
-						email: email,
-						market: market,
-						phoneNumber: phoneNumber,
+						name,
+						contactName,
+						email,
+						market,
+						phoneNumber,
 						agents: {
 							connect: ids,
 						},
@@ -96,11 +96,11 @@ schema.extendType({
 				const customer = await ctx.db.customer.update({
 					where: { id: id },
 					data: {
-						name: name,
-						contactName: contactName,
-						market: market,
-						email: email,
-						phoneNumber: phoneNumber,
+						name,
+						contactName,
+						market,
+						email,
+						phoneNumber,
 					},
 				})
 				return customer

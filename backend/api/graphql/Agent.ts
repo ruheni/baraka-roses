@@ -74,17 +74,21 @@ schema.extendType({
 				name: schema.stringArg({ nullable: false }),
 				phoneNumber: schema.stringArg({ nullable: false }),
 				email: schema.stringArg({ nullable: false }),
+				customerId: schema.intArg({ nullable: false }),
 			},
-			resolve: async (_root, { name, email, phoneNumber, id }, ctx) => {
+			resolve: async (_root, { name, email, phoneNumber, id, customerId }, ctx) => {
 				const agent = await ctx.db.agent.update({
 					where: {
 						id
 					},
 					data: {
 						name,
-						phoneNumber,
 						email,
-					},
+						phoneNumber,
+						Customer: {
+							connect: { id: customerId }
+						}
+					}
 				})
 				return agent
 			},

@@ -45,7 +45,7 @@ input AgentWhereUniqueInput {
 }
 
 type AuthPayload {
-  token: String
+  token: String!
   User: User
 }
 
@@ -140,18 +140,20 @@ The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http:/
 """
 scalar Json
 
+type MessagePayload {
+  message: String!
+}
+
 type Mutation {
   createAgent(customerId: Int!, email: String!, name: String!, phoneNumber: String!): Agent
   createCustomer(agentIds: [Int!], contactName: String!, email: String!, market: String!, name: String!, phoneNumber: String!): Customer!
   createOrder(customerId: Int!, date: String!, productIds: [Int!]!): Order
   createProduct(color: Color!, grade: Grade!, length: Int!, quantity: Int!, variety: String!): Product
-  login(email: String!, password: String!): AuthPayload
-  signup(email: String!, firstName: String!, lastName: String!, password: String!, role: Role!): AuthPayload
-  updateAgent(email: String!, id: Int!, name: String!, phoneNumber: String!): Agent!
+  createUser(email: String!, firstName: String!, lastName: String!, password: String!, role: Role!): MessagePayload
+  updateAgent(customerId: Int!, email: String!, id: Int!, name: String!, phoneNumber: String!): Agent!
   updateCustomer(contactName: String!, email: String!, id: Int!, market: String!, name: String!, phoneNumber: String!): Customer!
   updateOrder(finalQuantity: Int!, id: Int!, productIds: Int, status: OrderStatus!): Order
   updateProduct(color: Color!, grade: Grade!, id: Int!, length: Int!, quantity: Int!, variety: String!): Product
-  updateUser(email: String!, firstName: String!, id: Int!, lastName: String!, password: String!, role: Role!): User
 }
 
 input NestedDateTimeFilter {
@@ -353,6 +355,7 @@ type User {
   email: String!
   firstName: String!
   id: Int!
+  isActivated: Boolean!
   lastName: String!
   password: String!
   role: Role!

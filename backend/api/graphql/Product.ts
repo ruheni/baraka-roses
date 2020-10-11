@@ -76,11 +76,11 @@ schema.extendType({
 			resolve: async (_root, { length, quantity, variety, color, grade }, ctx) => {
 				const product = await ctx.db.product.create({
 					data: {
-						length: length,
-						quantity: quantity,
-						variety: variety,
-						color: color,
-						grade: grade,
+						length,
+						quantity,
+						variety,
+						color,
+						grade,
 					},
 				})
 
@@ -107,11 +107,11 @@ schema.extendType({
 				const product = await ctx.db.product.update({
 					where: { id: id },
 					data: {
-						length: length,
-						quantity: quantity,
-						variety: variety,
-						color: color,
-						grade: grade,
+						length,
+						quantity,
+						variety,
+						color,
+						grade,
 					},
 				})
 
