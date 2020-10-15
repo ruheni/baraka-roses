@@ -1,60 +1,57 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import { Menu, Layout } from 'antd';
-import { ContainerOutlined} from '@ant-design/icons';
+import { ContainerOutlined } from "@ant-design/icons";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Avatar, Layout, Menu } from "antd";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
+const { Header, Sider } = Layout;
 
-class SideBar extends React.Component {
-  state = {
-    collapsed: false,
-    current: 'mail'
+interface SideBarProps {
+  children: React.ReactNode;
+}
+
+function SideBar({ children }: SideBarProps) {
+  const { user, isAuthenticated } = useAuth0();
+  const [current, setCurrent] = useState<any>("mail");
+
+  const handleClick = (e: any) => {
+    console.log("click ", e);
+    setCurrent({ current: e.key });
   };
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
+  return (
+    <Layout>
+      <Header style={{ padding: 0 }}>
+        <Menu
+          onClick={handleClick}
+          selectedKeys={[current]}
+          mode="horizontal"
+          theme="dark"
+        >
+          <Menu.Item key="brand" >
+            Baraka Roses
+          </Menu.Item>
 
-  handleClick = (e:any) => {
-    console.log('click ', e);
-    this.setState({ current: e.key });
-  };
-
-  render() {
-    const { current } = this.state;
-    const { Header, Sider} = Layout;
-
-    return (
-      <div >
-         <Layout>
-         
-          <Header style={{padding: 0}}>
-            <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal" theme="dark">
-              <Menu.Item key="brand" style={{float: 'left'}}>
-                Baraka Roses
-              </Menu.Item>
-         
-              <Menu.Item key="notify" style={{float: 'right'}}>
-                Notifications
-              </Menu.Item>
-              <Menu.Item key="profile" style={{float: 'right'}}>
-                Profile
-              </Menu.Item>
-            </Menu>
-          </Header>
-          <Layout>
-          <Sider >
-            <Menu
-            defaultSelectedKeys={['1']}
+          <Menu.Item key="notify" >
+            Notifications
+          </Menu.Item>
+          <Menu.Item key="profile" >
+            {isAuthenticated ? <Avatar src={user.picture} /> : null}
+          </Menu.Item>
+        </Menu>
+      </Header>
+      <Layout>
+        <Sider>
+          <Menu
+            defaultSelectedKeys={["1"]}
             mode="inline"
             theme="dark"
-            /*inlineCollapsed={this.state.collapsed}*/
-            style={{ minHeight: '95vh' }}>
+            style={{ minHeight: "95vh" }}
+          >
             <Menu.Item key="1" icon={<ContainerOutlined />}>
               <Link to="/orders">Orders</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<ContainerOutlined/>}>
+            <Menu.Item key="2" icon={<ContainerOutlined />}>
               <Link to="/customers">Customers</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>
@@ -64,17 +61,12 @@ class SideBar extends React.Component {
               <Link to="/products">Products</Link>
             </Menu.Item>
           </Menu>
-          
-          </Sider>
-     
-          {this.props.children}
-            
-          </Layout>
-        </Layout>
-      </div>
-    );
-  }
-}
+        </Sider>
 
+        {children}
+      </Layout>
+    </Layout>
+  );
+}
 
 export default SideBar;

@@ -1,22 +1,23 @@
-import React from 'react';
-import Signup from 'pages/SignUp/SignUp';
-import LogIn from 'pages/LogIn/LogIn';
-import ResetPass from 'pages/ResetPass/ResetPass';
-import Orders from 'pages/Orders/Orders';
-import Customers from 'pages/Customers/Customers';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { Auth0Provider } from "@auth0/auth0-react";
+import Agentdetails from 'pages/Agents/AgentDetails';
 import Agents from 'pages/Agents/Agents';
+import Customerdetails from 'pages/Customers/CustomerDetails';
+import Customers from 'pages/Customers/Customers';
+import LogIn from 'pages/LogIn/LogIn';
+import Orderdetails from 'pages/Orders/OrderDetails';
+import Orders from 'pages/Orders/Orders';
+import Productdetails from 'pages/Products/ProductDetails';
 import Products from 'pages/Products/Products';
+import ResetPass from 'pages/ResetPass/ResetPass';
+import Signup from 'pages/SignUp/SignUp';
 import Team from 'pages/Team/Team';
-import Dashboard from 'pages/Dashboard/Dashboard';
-import NewProduct from 'pages/Products/ProductDetails';
-import NewAgent from 'pages/Agents/AgentDetails';
-import NewCustomer from 'pages/Customers/CustomerDetails'
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
-import { ApolloClient, InMemoryCache, ApolloProvider  } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://baraka-roses-backend.azurewebsites.net/graphql',
+  uri: process.env.REACT_APP_URI,
   cache: new InMemoryCache()
 });
 
@@ -25,7 +26,7 @@ const AppRoutes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Signup />
+        <Products />
       </Route>
       <Route path="/signup">
         <Signup />
@@ -36,29 +37,41 @@ const AppRoutes = () => {
       <Route path="/reset">
         <ResetPass />
       </Route>
-      <Route path="/orders">
+      <Route exact path="/orders">
         <Orders/>
       </Route>
-      <Route path="/customers">
+      <Route path="/orders/:id">
+        <Orderdetails/>
+      </Route>
+      <Route exact path="/orders/new">
+        <Orderdetails/>
+      </Route>
+      <Route exact path="/customers">
         <Customers/>
       </Route>
-      <Route path="/newCustomer">
-        <NewCustomer/>
+      <Route path="/customers/:id">
+        <Customerdetails/>
       </Route>
-      <Route path="/agents">
+      <Route exact path="/customers/new">
+        <Customerdetails/>
+      </Route>
+      <Route exact path="/agents">
         <Agents/>
       </Route>
-      <Route path="/newAgent">
-        <NewAgent/>
+      <Route exact path="/agents/:id">
+        <Agentdetails/>
       </Route>
-      <Route path="/products">
+      <Route exact path="/agents/new">
+        <Agentdetails/>
+      </Route>
+      <Route exact path="/products">
         <Products/>
       </Route>
-      <Route path="/newProduct">
-        <NewProduct/>
+      <Route exact path="/products/:id">
+        <Productdetails/>
       </Route>
-      <Route path="/dashboard">
-        <Dashboard/>
+      <Route path="/products/new">
+        <Productdetails/>
       </Route>
       <Route path="/team">
         <Team/>
@@ -69,6 +82,11 @@ const AppRoutes = () => {
 
 function App() {
   return (
+    <Auth0Provider
+    domain={`${process.env.REACT_APP_DOMAIN}`}
+    clientId={`${process.env.REACT_APP_CLIENTID}`}
+    redirectUri={window.location.origin}
+    >
     <ApolloProvider client={client}>
       <Router>
         <div className="App">
@@ -76,6 +94,7 @@ function App() {
         </div>
       </Router>
     </ApolloProvider>
+    </Auth0Provider>
   );
 }
 

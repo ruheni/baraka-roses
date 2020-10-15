@@ -1,139 +1,104 @@
-import React from 'react';
-import { Layout, Typography, Form, Input, Space, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import styles from 'pages/Products/Products.module.css';
-import SideBar from 'components/SideBar/SideBar'
-import { gql, useMutation } from '@apollo/client';
-
-const ADD_AGENT = gql`
-    mutation AddAgents($name: String!, $phoneNumber: String!, $email: String!, $customerId: Int!) {
-        createAgent(name: $name, phoneNumber: $phoneNumber, email: $email, customerId: $customerId) {
-        name
-        phoneNumber
-        email
-        Customer{
-            market
-        }
-    }
-}
-`;
-
+import { UserOutlined } from "@ant-design/icons";
+import { useMutation, useQuery } from "@apollo/client";
+import { Button, Form, Input, Select, Space, Typography } from "antd";
+import { AddAgents, AgentCustomer } from "api/Agents";
+import SideBar from "components/SideBar/SideBar";
+import styles from "pages/Products/Products.module.css";
+import React from "react";
+import { useParams } from "react-router-dom";
+const { Option } = Select;
 const { Title } = Typography;
-const { Content } = Layout;
 
-
-const CollectionCreateForm = ({onCreate}:any) => {
+function Agentdetails() {
   const [form] = Form.useForm();
-  const [createAgents] = useMutation(ADD_AGENT);
+  const { id }: any = useParams();
+  const { data } = useQuery(AgentCustomer, {
+    variables: { id: parseInt(id) },
+  });
 
-  const onFinish=(e: any) => {
-    e.preventDefault();
+  form.setFieldsValue(data?.agentProfile);
+  const [createAgents] = useMutation(AddAgents);
+
+  const onCreate = () => {
     form
       .validateFields()
-      .then(values => {
-        onCreate(values);
+      .then((values) => {
+        onFinish(values);
+        let { customerId } = values;
 
-        createAgents({ variables: { 
-          name: values.name,
-          phoneNumber: values.phoneNumber,
-          email: values.email,
-          customerId: values.customerId
-         } });
+        values.customerId = parseInt(customerId);
+
+        createAgents({
+          variables: {
+            name: values.name,
+            phoneNumber: values.phoneNumber,
+            email: values.email,
+            customerId: values.customerId,
+          },
+        });
       })
-      .catch(info => {
-        console.log('Validate Failed:', info);
+      .catch((info) => {
+        console.log("Validate Failed:", info);
       });
-  }
-
-  return (
-    <Form
-        form={form}
-        layout="horizontal"
-        name="add_product_form"
-        initialValues={{
-          modifier: 'public',
-        }}
-        onFinish={onFinish}
-      >
-              
-        <Form.Item
-          name="name"
-          label="Name: "
-          rules={[{ required: true, message: "Please input the agent's name" }]}
-        >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Agent Name" type="text"/>
-        </Form.Item>
-        
-        <Form.Item
-          name="email"
-          label="Email Address: "
-        >
-          <Input placeholder="Email Address" type="email"/>
-        </Form.Item>
-
-        <Form.Item
-          name="phoneNumber"
-          label="Phone Number: "
-        >
-          <Input placeholder="Phone Number" type="number"/>
-        </Form.Item>
-
-        <Form.Item
-          name="customerId"
-          label="Location: "
-        >
-          <Input  placeholder="Location" type="text"/>
-        </Form.Item>
-
-        <Form.Item>
-            <Button type="primary" href='/agents' onClick={ onFinish } >
-                Submit
-            </Button>
-        </Form.Item>
-      </Form>
-  );
-};
-
-
-function NewAgent() {
-
-  const [form] = Form.useForm();
-
-  const onCreate = (values: any) => {
-    console.log('Received values of form: ', values);
   };
 
   const onFinish = (values: any) => {
-    console.log('Finish:', values);
+    console.log("Received values of form: ", values);
   };
 
-
-  return(
+  return (
     <SideBar>
       <div className={styles.Agents}>
-        <Content>
-          <Layout>
-            <div >
-              <Space align="baseline">
-                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+        <Space align="baseline">
+          <Title level={2} type="secondary" className={styles.spaceAlign}>
+            Add New Agent
+          </Title>
+        </Space>
 
-                  <Form.Item name="navtitle"  >
-                    <Title level={2} type="secondary" className={styles.spaceAlign}>Add New Agent</Title>
-                  </Form.Item>
+        <div className={styles.Table}>
+          <Form form={form} layout="horizontal" name="add_agent_form">
+            <Form.Item
+              name="name"
+              label="Name: "
+              rules={[
+                { required: true, message: "Please input the agent's name" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Agent Name"
+                type="text"
+              />
+            </Form.Item>
 
-                </Form>
-              </Space>
-            </div>
-          </Layout>
+            <Form.Item name="email" label="Email Address: ">
+              <Input placeholder="Email Address" type="email" />
+            </Form.Item>
 
-        <Content className={styles.Table}>
-            <CollectionCreateForm onCreate={onCreate}/>
-        </Content>
-      </Content>
-  </div>
-  </SideBar>
-  )
+            <Form.Item name="phoneNumber" label="Phone Number: ">
+              <Input placeholder="Phone Number" type="number" />
+            </Form.Item>
+
+            <Form.Item name="customerId" label="Customer ID: ">
+              <Select placeholder="Customer ID">
+                {data?.customers.map(({id, name}: any) => (
+                  <Option key={id} value={id}>
+                    {name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" onClick={onCreate}>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
+    </SideBar>
+  );
 }
 
-
-export default NewAgent;
+export default Agentdetails;

@@ -1,116 +1,77 @@
-import React from 'react';
-import { Layout, Typography, Form, Input, Table, Space, Button} from 'antd';
-import styles from 'pages/Products/Products.module.css';
-import SideBar from 'components/SideBar/SideBar'
-import { useQuery, gql} from '@apollo/client';
-
-const GetProducts = gql`
-  query GetProducts{
-    products{
-      id
-      color
-      quantity
-      grade
-      variety
-    }
-  }
-`;
-
+import { useQuery } from "@apollo/client";
+import { Button, Space, Table, Typography } from "antd";
+import SideBar from "components/SideBar/SideBar";
+import styles from "pages/Products/Products.module.css";
+import React from "react";
+import { Link } from "react-router-dom";
+import { GetProducts } from "api/Products";
 
 const { Title } = Typography;
-const { Content } = Layout;
-const { Search } = Input
 
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'id',
-    key: 'id',
+    title: "Name",
+    dataIndex: "id",
+    key: "id",
   },
   {
-    title: 'Colour',
-    dataIndex: 'color',
-    key: 'color',
+    title: "Colour",
+    dataIndex: "color",
+    key: "color",
   },
   {
-    title: 'Quantity',
-    dataIndex: 'quantity',
-    key: 'quantity',
+    title: "Quantity",
+    dataIndex: "quantity",
+    key: "quantity",
   },
   {
-    title: 'Grade',
-    dataIndex: 'grade',
-    key: 'grade',
+    title: "Grade",
+    dataIndex: "grade",
+    key: "grade",
   },
- 
+
   {
-    title: 'Variety',
-    dataIndex: 'variety',
-    key: 'variety',
+    title: "Variety",
+    dataIndex: "variety",
+    key: "variety",
   },
   {
-    title: 'Edit',
-    key: 'edit',
-    render: (text: any) => (
+    title: "Edit",
+    key: "edit",
+    render: (text: any, record: { id: React.ReactNode }) => (
       <Space size="middle">
-        <a href="/new">edit</a>
+        <Link to={`/products/${record.id}`}>edit</Link>
       </Space>
     ),
   },
 ];
 
-
 function Products() {
-  const [form] = Form.useForm();
-
-  const onFinish = (values: any) => {
-    console.log('Finish:', values);
-  };
-
   const { loading, error, data } = useQuery(GetProducts);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :( </p>;
 
-  return(
+  return (
     <SideBar>
-    <div className={styles.Products}>
-      <Content>
-        <Layout>
-        <div >
-          <Space align="baseline">
-            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+      <div className={styles.Products}>
+        <Space align="baseline">
+          <Title level={2} type="secondary" className={styles.spaceAlign}>
+            Products
+          </Title>
 
-              <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Products</Title> 
-              </Form.Item>
-
-              <Form.Item >
-                    <Search placeholder="Search" size="large" onSearch={value => console.log(value)} style={{ width: 250 }} className={styles.spaceAlign}/>
-              </Form.Item>
-              <Form.Item name="addProduct" >
-                    <Button
-                      type="primary" danger
-                      size='large'
-                      href="/newProduct"
-                    >
-                      + Add New Products
-                    </Button>
-
-              </Form.Item>
-            </Form>
-          </Space>
-        </div>
-        </Layout>
-
-        <Content  className={styles.Table}>
+          <Link to="products/new">
+            <Button type="primary" danger size="large">
+              + Add New Products
+            </Button>
+          </Link>
+        </Space>
+        <div className={styles.Table}>
           <Table columns={columns} dataSource={data.products} />
-        </Content>
-      </Content>
-  </div>
-  </SideBar>
-  )
+        </div>
+      </div>
+    </SideBar>
+  );
 }
-
 
 export default Products;

@@ -1,151 +1,92 @@
-import React from 'react';
-import { Layout, Typography, Form, Input, Space, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import styles from 'pages/Customers/Customers.module.css';
-import SideBar from 'components/SideBar/SideBar'
-import { gql, useMutation } from '@apollo/client';
-
-const ADD_CUSTOMER = gql`
-mutation Addcustomer(
-  $name: String!,
-  $contactName: String!,
-  $market: String!,
-  $email: String!,
-  $phoneNumber: String!,
-  $agentIds: [Int!]
-) {
-  createCustomer(
-    name: $name,
-    contactName: $contactName,
-    market: $market,
-    phoneNumber: $phoneNumber,
-    email: $email,
-    agentIds: $agentIds
-  ) {
-    name
-    market
-    phoneNumber
-    email
-  }
-}
-`;
+import { UserOutlined } from "@ant-design/icons";
+import { useMutation, useQuery } from "@apollo/client";
+import { Button, Form, Input, Typography } from "antd";
+import { AddCustomer, CustomerDetails } from "api/Customers";
+import SideBar from "components/SideBar/SideBar";
+import styles from "pages/Customers/Customers.module.css";
+import React from "react";
+import { useParams } from "react-router-dom";
 
 const { Title } = Typography;
-const { Content } = Layout;
 
-
-const CollectionCreateForm = ({onCreate}:any) => {
+function Customerdetails() {
   const [form] = Form.useForm();
-  const [createCustomers] = useMutation(ADD_CUSTOMER);
+  const { id }: any = useParams();
+  const { data } = useQuery(CustomerDetails, {
+    variables: { id: parseInt(id) },
+  });
 
-  const onFinish=(e: any) => {
-    e.preventDefault();
+  form.setFieldsValue(data?.customerProfile);
+  const [createCustomers] = useMutation(AddCustomer);
 
+  const onCreate = () => {
     form
       .validateFields()
-      .then(values => {
-        onCreate(values);
-
-        createCustomers({ variables: { 
-          name: values.name,
-          market: values.market,
-          phoneNumber: values.phoneNumber,
-          email: values.email
-         } });
+      .then((values) => {
+        onFinish(values);
+        createCustomers({
+          variables: {
+            name: values.name,
+            phoneNumber: values.phoneNumber,
+            email: values.email,
+            market: values.market,
+          },
+        });
       })
-      .catch(info => {
-        console.log('Validate Failed:', info);
+      .catch((info) => {
+        console.log("Validate Failed:", info);
       });
-  }
-
-  return (
-    <Form
-    form={form}
-    layout="horizontal"
-    name="form_in_modal"
-    initialValues={{
-      modifier: 'public',
-    }}
-    >
-    
-    <Form.Item
-      name="name"
-      label="Name: "
-      rules={[{ required: true, message: "Please input the customer's name" }]}
-    >
-      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Customer's Name" type="text"/>
-    </Form.Item>
-    
-    <Form.Item
-      name="email"
-      label="Email Address: "
-    >
-      <Input placeholder="Email Address" type="email"/>
-    </Form.Item>
-
-    <Form.Item
-      name="phoneNumber"
-      label="Phone Number: "
-    >
-      <Input placeholder="Phone Number" type="number"/>
-    </Form.Item>
-
-    <Form.Item
-      name="location"
-      label="Location: "
-    >
-      <Input  placeholder="Location" type="text"/>
-    </Form.Item>
-    
-        <Form.Item>
-            <Button type="primary" href='/products' onClick={ onFinish } >
-                Submit
-            </Button>
-        </Form.Item>
-      </Form>
-  );
-};
-
-
-function NewCustomer() {
-
-  const [form] = Form.useForm();
-
-  const onCreate = (values: any) => {
-    console.log('Received values of form: ', values);
   };
 
   const onFinish = (values: any) => {
-    console.log('Finish:', values);
+    console.log("Received values of form: ", values);
   };
 
-
-  return(
+  return (
     <SideBar>
-    <div className={styles.Customers}>
-      <Content>
-        <Layout>
-        <div >
-          <Space align="baseline">
-          <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+      <div className={styles.Customers}>
+        <Title level={2} type="secondary" className={styles.spaceAlign}>
+          Add New Customer
+        </Title>
 
-            <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Add New Customer</Title> 
+        <div className={styles.Table}>
+          <Form form={form} layout="horizontal" name="add_customer_form">
+            <Form.Item
+              name="name"
+              label="Name: "
+              rules={[
+                { required: true, message: "Please input the customer's name" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Customer's Name"
+                type="text"
+              />
             </Form.Item>
-              
-            </Form>
-          </Space>
-        </div>
-        </Layout>
 
-        <Content className={styles.Table}>
-            <CollectionCreateForm onCreate={onCreate}/>
-        </Content>
-      </Content>
-    </div>
-  </SideBar>
-  )
+            <Form.Item name="phoneNumber" label="Phone Number: ">
+              <Input placeholder="Phone Number" type="number" />
+            </Form.Item>
+
+            <Form.Item name="email" label="Email Address: ">
+              <Input placeholder="Email Address" type="email" />
+            </Form.Item>
+
+            <Form.Item name="market" label="Location: ">
+              <Input placeholder="Location" type="text" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" onClick={onCreate}>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
+    </SideBar>
+  );
 }
 
-
-export default NewCustomer;
+export default Customerdetails;

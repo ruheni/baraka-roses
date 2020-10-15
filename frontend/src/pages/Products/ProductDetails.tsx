@@ -1,152 +1,119 @@
-import React from 'react';
-import { Layout, Typography, Form, Input, Space, Button } from 'antd';
-import styles from 'pages/Products/Products.module.css';
-import SideBar from 'components/SideBar/SideBar'
-import { gql, useMutation } from '@apollo/client';
+import { useMutation, useQuery } from "@apollo/client";
+import { Button, Form, Input, Select, Typography } from "antd";
+import { AddProducts, ProductDetails } from "api/Products";
+import SideBar from "components/SideBar/SideBar";
+import styles from "pages/Products/Products.module.css";
+import React from "react";
+import { useParams } from "react-router-dom";
 
-const ADD_PRODUCT = gql`
-mutation AddProducts($color: Color!, $quantity: Int!, $grade: Grade!, $variety: String!,$length: Int!) {
-    createProduct(color: $color, quantity: $quantity,  grade: $grade, variety: $variety, length: $length) {
-      id
-      color
-      quantity
-      grade
-      variety
-      length
-      createdAt
-    }
-}
-`;
-
+const { Option } = Select;
 const { Title } = Typography;
-const { Content } = Layout;
 
-
-const CollectionCreateForm = ({onCreate}:any) => {
+function Productdetails() {
   const [form] = Form.useForm();
-  const [createProducts] = useMutation(ADD_PRODUCT);
+  const { id }: any = useParams();
+  const { data }: any = useQuery(ProductDetails, {
+    variables: { id: parseInt(id) },
+  });
 
-  const onFinish=(e: any) => {
-    e.preventDefault();
+  form.setFieldsValue(data?.productDetails);
+  //const [createProducts] = id? useMutation(AddProducts): useMutation(UpdateProducts);
+  const [createProducts] = useMutation(AddProducts);
+
+  const onCreate = () => {
     form
       .validateFields()
-      .then(values => {
-        onCreate(values);
-        let {quantity, length} = values
-        
-        values.quantity = parseInt(quantity)
+      .then((values) => {
+        onFinish(values);
+        let { quantity, length } = values;
+
+        values.quantity = parseInt(quantity);
         values.length = parseInt(length)
 
-        createProducts({ variables: { 
-          color: values.color,
-          grade: values.grade,
-          length: values.length,
-          variety: values.variety,
-          quantity: values.quantity
-         } });
+        createProducts({
+          variables: {
+            color: values.color,
+            quantity: values.quantity,
+            grade: values.grade,
+            variety: values.variety,
+            length: values.length,
+          },
+        });
       })
-      .catch(info => {
-        console.log('Validate Failed:', info);
+      .catch((info) => {
+        console.log("Validate Failed:", info);
       });
-  }
-
-  return (
-    <Form
-        form={form}
-        layout="horizontal"
-        name="add_product_form"
-        initialValues={{
-          modifier: 'public',
-        }}
-        onFinish={onFinish}
-      >
-              
-        <Form.Item
-          name="color"
-          label="Color: "
-        >
-          <Input placeholder="Color" type="text"/>
-        </Form.Item>
-
-        <Form.Item
-          name="grade"
-          label="Grade: "
-        >
-          <Input placeholder="Grade" type="text"/>
-        </Form.Item>
-
-        <Form.Item
-          name="length"
-          label="Length: "
-        >
-          <Input placeholder="Length" type="number"/>
-        </Form.Item>
-        
-        <Form.Item
-          name="variety"
-          label="variety: "
-          rules={[{required: true, message: 'Please input the product name'}]}
-        >
-          <Input placeholder="Variety" type="text"/>
-        </Form.Item>
-
-        <Form.Item
-          name="quantity"
-          label="Quantity: "
-          rules={[{ required: true, message: 'Please input the quantity' }]}
-        >
-          <Input  placeholder="Quantity" type="number"/>
-        </Form.Item>
-
-        <Form.Item>
-            <Button type="primary" href='/products' onClick={ onFinish } >
-                Submit
-            </Button>
-        </Form.Item>
-      </Form>
-  );
-};
-
-
-function NewProduct() {
-
-  const [form] = Form.useForm();
-
-  const onCreate = (values: any) => {
-    console.log('Received values of form: ', values);
   };
 
   const onFinish = (values: any) => {
-    console.log('Finish:', values);
+    console.log("Received values of form: ", values);
   };
 
-
-  return(
+  return (
     <SideBar>
-    <div className={styles.Products}>
-      <Content>
-        <Layout>
-        <div >
-          <Space align="baseline">
-            <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} size='small'>
+      <div className={styles.Products}>
+        <Title level={2} type="secondary" className={styles.spaceAlign}>
+          Add New Product
+        </Title>
 
-              <Form.Item name="navtitle"  >
-                <Title level={2} type="secondary" className={styles.spaceAlign}>Add New Product</Title> 
-              </Form.Item>
-              
-            </Form>
-          </Space>
+        <div className={styles.Table}>
+          <Form form={form} layout="horizontal" name="add_product_form">
+            <Form.Item name="color" label="Color: ">
+              <Select placeholder="Color">
+                <Option value="WHITE">White</Option>
+                <Option value="LILAC">Lilac</Option>
+                <Option value="PINK">Pink</Option>
+                <Option value="CERISE">Cerise</Option>
+                <Option value="RED">Red</Option>
+                <Option value="ORANGE">Orange</Option>
+                <Option value="YELLOW">Yellow</Option>
+                <Option value="PEACH">Peach</Option>
+                <Option value="BI_COLOUR">Bi-Colour</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="quantity"
+              label="Quantity: "
+              rules={[{ required: true, message: "Please input the quantity" }]}
+            >
+              <Input placeholder="Quantity" type="number" />
+            </Form.Item>
+            <Form.Item
+              name="length"
+              label="Length: "
+              rules={[{ required: true, message: "Please input the length" }]}
+            >
+              <Input placeholder="Length" type="number" />
+            </Form.Item>
+
+            <Form.Item name="grade" label="Grade: ">
+              <Select placeholder="Grade">
+                <Option value="GRADED">Graded</Option>
+                <Option value="UNGRADED">Ungraded</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="variety"
+              label="variety: "
+              rules={[
+                { required: true, message: "Please input the product name" },
+              ]}
+            >
+              <Input placeholder="Variety" type="text" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" onClick={onCreate}>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
-        </Layout>
-
-        <Content className={styles.Table}>
-            <CollectionCreateForm onCreate={onCreate}/>
-        </Content>
-      </Content>
-  </div>
-  </SideBar>
-  )
+      </div>
+    </SideBar>
+  );
 }
 
-
-export default NewProduct;
+export default Productdetails;
