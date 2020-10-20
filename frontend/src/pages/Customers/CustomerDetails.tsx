@@ -2,7 +2,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Typography } from "antd";
 import { AddCustomer, CustomerDetails } from "api/Customers";
-import SideBar from "components/SideBar/SideBar";
+import Dashboard from "components/Dashboard/Dashboard";
 import styles from "pages/Customers/Customers.module.css";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -43,7 +43,7 @@ function Customerdetails() {
   };
 
   return (
-    <SideBar>
+    <Dashboard>
       <div className={styles.Customers}>
         <Title level={2} type="secondary" className={styles.spaceAlign}>
           Add New Customer
@@ -85,7 +85,7 @@ function Customerdetails() {
           </Form>
         </div>
       </div>
-    </SideBar>
+    </Dashboard>
   );
 }
 

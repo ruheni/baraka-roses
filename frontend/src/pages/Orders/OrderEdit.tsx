@@ -8,7 +8,7 @@ import React from "react";
 
 const { Title } = Typography;
 
-function Orderdetails() {
+function Orderedit() {
   const [form] = Form.useForm();
   const [createOrders] = useMutation(AddOrders);
 
@@ -18,17 +18,13 @@ function Orderdetails() {
       .then((values) => {
         onFinish(values);
 
-        const {id} = values
-        id.values = parseInt(id)
-
         createOrders({
           variables: {
-            id: values.id,
-            name: values.name,
             color: values.color,
             grade: values.grade,
-            status: values.status,
+            length: values.length,
             variety: values.variety,
+            quantity: values.quantity,
           },
         });
       })
@@ -103,4 +99,4 @@ function Orderdetails() {
   );
 }
 
-export default Orderdetails;
+export default Orderedit;

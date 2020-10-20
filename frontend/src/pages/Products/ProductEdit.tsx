@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Select, Typography } from "antd";
-import { AddProducts, ProductDetails } from "api/Products";
+import { UpdateProducts, ProductDetails } from "api/Products";
 import Dashboard from "components/Dashboard/Dashboard";
 import styles from "pages/Products/Products.module.css";
 import React from "react";
@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 const { Option } = Select;
 const { Title } = Typography;
 
-function Productdetails() {
+function Productedit() {
   const [form] = Form.useForm();
   const { id }: any = useParams();
   const { data }: any = useQuery(ProductDetails, {
@@ -17,20 +17,22 @@ function Productdetails() {
   });
 
   form.setFieldsValue(data?.productDetails);
-  const [createProducts] = useMutation(AddProducts);
+  const [editProducts] = useMutation(UpdateProducts);
 
   const onCreate = () => {
     form
       .validateFields()
       .then((values) => {
         onFinish(values);
-        let { quantity, length } = values;
+        let { quantity, length, id } = values;
 
         values.quantity = parseInt(quantity);
         values.length = parseInt(length)
+        values.id = parseInt(id)
 
-        createProducts({
+        editProducts({
           variables: {
+            id: values.id,
             color: values.color,
             quantity: values.quantity,
             grade: values.grade,
@@ -52,7 +54,7 @@ function Productdetails() {
     <Dashboard>
       <div className={styles.Products}>
         <Title level={2} type="secondary" className={styles.spaceAlign}>
-          Add New Product
+          Edit Product
         </Title>
 
         <div className={styles.Table}>
@@ -69,6 +71,13 @@ function Productdetails() {
                 <Option value="PEACH">Peach</Option>
                 <Option value="BI_COLOUR">Bi-Colour</Option>
               </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="id"
+              label="Product ID: "
+               >
+              <Input placeholder="Product ID" type="number" />
             </Form.Item>
 
             <Form.Item
@@ -115,4 +124,4 @@ function Productdetails() {
   );
 }
 
-export default Productdetails;
+export default Productedit;

@@ -1,39 +1,41 @@
 import { UserOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
-import { Button, Form, Input, Select, Space, Typography } from "antd";
-import { AddAgents, AgentCustomer } from "api/Agents";
+import { Button, Form, Input, Typography } from "antd";
+import { UpdateCustomer, CustomerDetails } from "api/Customers";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Products/Products.module.css";
+import styles from "pages/Customers/Customers.module.css";
 import React from "react";
 import { useParams } from "react-router-dom";
-const { Option } = Select;
+
 const { Title } = Typography;
 
-function Agentdetails() {
+function Customeredit() {
   const [form] = Form.useForm();
   const { id }: any = useParams();
-  const { data } = useQuery(AgentCustomer, {
+  const { data } = useQuery(CustomerDetails, {
     variables: { id: parseInt(id) },
   });
 
-  form.setFieldsValue(data?.agentProfile);
-  const [createAgents] = useMutation(AddAgents);
+  form.setFieldsValue(data?.customerProfile);
+  const [editCustomers] = useMutation(UpdateCustomer);
 
   const onCreate = () => {
     form
       .validateFields()
       .then((values) => {
         onFinish(values);
-        let { customerId } = values;
 
-        values.customerId = parseInt(customerId);
+        let { id } = values;
 
-        createAgents({
+        values.id = parseInt(id);
+
+        editCustomers({
           variables: {
+            id: values.id,
             name: values.name,
             phoneNumber: values.phoneNumber,
             email: values.email,
-            customerId: values.customerId,
+            market: values.market,
           },
         });
       })
@@ -48,49 +50,46 @@ function Agentdetails() {
 
   return (
     <Dashboard>
-      <div className={styles.Agents}>
-        <Space align="baseline">
-          <Title level={2} type="secondary" className={styles.spaceAlign}>
-            Add New Agent
-          </Title>
-        </Space>
+      <div className={styles.Customers}>
+        <Title level={2} type="secondary" className={styles.spaceAlign}>
+          Edit Customer
+        </Title>
 
         <div className={styles.Table}>
-          <Form form={form} layout="horizontal" name="add_agent_form">
+          <Form form={form} layout="horizontal" name="add_customer_form">
             <Form.Item
               name="name"
               label="Name: "
               rules={[
-                { required: true, message: "Please input the agent's name" },
+                { required: true, message: "Please input the customer's name" },
               ]}
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Agent Name"
+                placeholder="Customer's Name"
                 type="text"
               />
+            </Form.Item>
+            <Form.Item
+              name="id"
+              label="Customer ID: "
+               >
+              <Input placeholder="Customer ID" type="number" />
+            </Form.Item>
+            <Form.Item name="phoneNumber" label="Phone Number: ">
+              <Input placeholder="Phone Number" type="number" />
             </Form.Item>
 
             <Form.Item name="email" label="Email Address: ">
               <Input placeholder="Email Address" type="email" />
             </Form.Item>
 
-            <Form.Item name="phoneNumber" label="Phone Number: ">
-              <Input placeholder="Phone Number" type="number" />
-            </Form.Item>
-
-            <Form.Item name="customerId" label="Customer ID: ">
-              <Select placeholder="Customer ID">
-                {data?.customers.map(({id, name}: any) => (
-                  <Option key={id} value={id}>
-                    {name}
-                  </Option>
-                ))}
-              </Select>
+            <Form.Item name="market" label="Location: ">
+              <Input placeholder="Location" type="text" />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" onClick={onCreate}>
+              <Button type="primary" onClick={onCreate}>
                 Submit
               </Button>
             </Form.Item>
@@ -101,4 +100,4 @@ function Agentdetails() {
   );
 }
 
-export default Agentdetails;
+export default Customeredit;
