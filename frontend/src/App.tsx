@@ -46,8 +46,8 @@ const AppRoutes = () => {
       <PrivateRoute exact path="/products/:id" comp={Productedit} />
       <PrivateRoute path="/products/new" comp={Productdetails} />
       <Route path="/team" component={Team} />
-      <Route path="*" component={PageNotFound} />
       <PrivateRoute path="/" exact component={Products} />
+      <Route path="*" component={PageNotFound} />
     </Switch>
   )
 }
