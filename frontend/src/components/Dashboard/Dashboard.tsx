@@ -1,6 +1,6 @@
 import { ContainerOutlined, MenuFoldOutlined, MenuUnfoldOutlined, BellOutlined } from "@ant-design/icons";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Avatar, Layout, Menu, Badge, Space } from "antd";
+import { Avatar, Layout, Menu, Badge, Space, Dropdown } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,10 +10,8 @@ interface SideBarProps {
   children: React.ReactNode;
 }
 
-function Dashboard({ children }: SideBarProps) {
-  const { user, isAuthenticated } = useAuth0();
-  const [current, setCurrent] = useState<any>("mail");
-
+function SideBar({ children }: SideBarProps) {
+  const { user, isAuthenticated, logout } = useAuth0();
   const [collapse, setCollapse] = useState<boolean>(false);
 
   const toggle = () => setCollapse(!collapse);
@@ -45,10 +43,13 @@ function Dashboard({ children }: SideBarProps) {
     },
   ]
 
-  const handleClick = (e: any) => {
-    console.log("click ", e);
-    setCurrent({ current: e.key });
-  };
+  const logoutMenu = (
+    <Menu>
+      <Menu.Item key="0" onClick={() => logout({ returnTo: window.location.origin })}>
+        Logout
+			</Menu.Item>
+    </Menu >
+  );
 
   return (
     <Layout>
@@ -87,18 +88,16 @@ function Dashboard({ children }: SideBarProps) {
               onClick: toggle,
             },
           )}
-          <Header
-            className="site-layout-background"
-            style={{ padding: 0 }}
-          >
-
-            <Space size="middle" className="align-right">
-              <Badge dot>
-                <BellOutlined />
-              </Badge>
-              {isAuthenticated ? <Avatar src={user.picture} /> : null}
-            </Space>
-          </Header>
+          <Space size="middle" className="align-right">
+            <Badge dot>
+              <BellOutlined />
+            </Badge>
+            {isAuthenticated ?
+              <Dropdown overlay={logoutMenu} trigger={["click"]}>
+                <Avatar src={user.picture} />
+              </Dropdown>
+              : null}
+          </Space>
         </Header>
         <Content
           style={{
@@ -114,4 +113,4 @@ function Dashboard({ children }: SideBarProps) {
   );
 }
 
-export default Dashboard;
+export default SideBar;

@@ -8,7 +8,7 @@ const LogIn = () => {
   useEffect(() => {
     loginWithRedirect();
   });
-  
+
   return (
     <div className={styles.Login}>
       <h1 className={styles.mainTitle}>Baraka Flowers</h1>

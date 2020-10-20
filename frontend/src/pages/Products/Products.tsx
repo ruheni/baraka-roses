@@ -2,9 +2,10 @@ import { useQuery } from "@apollo/client";
 import { Button, Space, Table, Typography } from "antd";
 import Dashboard from "components/Dashboard/Dashboard";
 import styles from "pages/Products/Products.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GetProducts } from "api/Products";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const { Title } = Typography;
 
@@ -48,13 +49,18 @@ const columns = [
 
 function Products() {
   const { loading, error, data } = useQuery(GetProducts);
+  const { isAuthenticated } = useAuth0()
+
+  useEffect(() => {
+    console.log(isAuthenticated)
+  }, [data])
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :( </p>;
 
   return (
     <Dashboard>
-      <div className={styles.Products}>
+      <div>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
             Products

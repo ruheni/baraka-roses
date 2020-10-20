@@ -64,7 +64,7 @@ function Orders() {
 
   return (
     <Dashboard>
-      <div className={styles.Orders}>
+      <div>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
             Orders

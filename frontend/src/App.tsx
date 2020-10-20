@@ -18,6 +18,7 @@ import Signup from 'pages/SignUp/SignUp';
 import Team from 'pages/Team/Team';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PrivateRoute from 'util/PrivateRoute'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_URI,
@@ -32,18 +33,18 @@ const AppRoutes = () => {
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={LogIn} />
       <Route path="/reset" component={ResetPass} />
-      <Route exact path="/orders" component={Orders} />
-      <Route path="/orders/:id" component={Orderedit} />
-      <Route exact path="/orders/new" component={Orderdetails} />
-      <Route exact path="/customers" component={Customers} />
-      <Route path="/customers/:id" component={Customeredit} />
-      <Route exact path="/customers/new" component={Customerdetails} />
-      <Route exact path="/agents" component={Agents} />
-      <Route exact path="/agents/:id" component={Agentedit} />
-      <Route exact path="/agents/new" component={Agentdetails} />
-      <Route exact path="/products" component={Products} />
-      <Route exact path="/products/:id" component={Productedit} />
-      <Route path="/products/new" component={Productdetails} />
+      <PrivateRoute exact path="/orders" comp={Orders} />
+      <PrivateRoute path="/orders/:id" comp={Orderedit} />
+      <PrivateRoute exact path="/orders/new" comp={Orderdetails} />
+      <PrivateRoute exact path="/customers" comp={Customers} />
+      <PrivateRoute path="/customers/:id" comp={Customeredit} />
+      <PrivateRoute exact path="/customers/new" comp={Customerdetails} />
+      <PrivateRoute exact path="/agents" comp={Agents} />
+      <PrivateRoute exact path="/agents/:id" comp={Agentedit} />
+      <PrivateRoute exact path="/agents/new" comp={Agentdetails} />
+      <PrivateRoute exact path="/products" comp={Products} />
+      <PrivateRoute exact path="/products/:id" comp={Productedit} />
+      <PrivateRoute path="/products/new" comp={Productdetails} />
       <Route path="/team" component={Team} />
     </Switch>
   )
@@ -58,9 +59,7 @@ function App() {
     >
       <ApolloProvider client={client}>
         <Router>
-          <div className="App">
             <AppRoutes />
-          </div>
         </Router>
       </ApolloProvider>
     </Auth0Provider>

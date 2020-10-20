@@ -48,7 +48,7 @@ function Customers() {
 
   return (
     <Dashboard>
-      <div className={styles.Customers}>
+      <div>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
             Customers

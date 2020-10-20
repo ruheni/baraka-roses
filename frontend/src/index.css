@@ -23,3 +23,9 @@
 .align-right {
 	float: right;
 }
+
+.button-align-right {
+	margin-bottom: 20px;
+	display: grid;
+	justify-items: end;
+}

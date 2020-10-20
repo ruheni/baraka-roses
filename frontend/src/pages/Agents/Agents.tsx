@@ -48,7 +48,7 @@ function Agents() {
 
   return (
     <Dashboard>
-      <div className={styles.Agents}>
+      <div>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
             Agents
