@@ -33,16 +33,16 @@ const AppRoutes = () => {
       <Route path="/login" component={LogIn} />
       <Route path="/reset" component={ResetPass} />
       <Route exact path="/orders" component={Orders} />
-      <Route path="/orders/:id" component={Orderdetails} />
+      <Route path="/orders/:id" component={Orderedit} />
       <Route exact path="/orders/new" component={Orderdetails} />
       <Route exact path="/customers" component={Customers} />
-      <Route path="/customers/:id" component={Customerdetails} />
+      <Route path="/customers/:id" component={Customeredit} />
       <Route exact path="/customers/new" component={Customerdetails} />
       <Route exact path="/agents" component={Agents} />
-      <Route exact path="/agents/:id" component={Agentdetails} />
+      <Route exact path="/agents/:id" component={Agentedit} />
       <Route exact path="/agents/new" component={Agentdetails} />
       <Route exact path="/products" component={Products} />
-      <Route exact path="/products/:id" component={Productdetails} />
+      <Route exact path="/products/:id" component={Productedit} />
       <Route path="/products/new" component={Productdetails} />
       <Route path="/team" component={Team} />
     </Switch>
