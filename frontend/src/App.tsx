@@ -1,12 +1,16 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { Auth0Provider } from "@auth0/auth0-react";
+import Agentedit from 'pages/Agents/AgentEdit'
 import Agentdetails from 'pages/Agents/AgentDetails';
 import Agents from 'pages/Agents/Agents';
+import Customeredit from 'pages/Customers/CustomerEdit'
 import Customerdetails from 'pages/Customers/CustomerDetails';
 import Customers from 'pages/Customers/Customers';
 import LogIn from 'pages/LogIn/LogIn';
+import Orderedit from 'pages/Orders/OrderEdit'
 import Orderdetails from 'pages/Orders/OrderDetails';
 import Orders from 'pages/Orders/Orders';
+import Productedit from 'pages/Products/ProductEdit'
 import Productdetails from 'pages/Products/ProductDetails';
 import Products from 'pages/Products/Products';
 import ResetPass from 'pages/ResetPass/ResetPass';
@@ -41,7 +45,7 @@ const AppRoutes = () => {
         <Orders/>
       </Route>
       <Route path="/orders/:id">
-        <Orderdetails/>
+        <Orderedit/>
       </Route>
       <Route exact path="/orders/new">
         <Orderdetails/>
@@ -50,7 +54,7 @@ const AppRoutes = () => {
         <Customers/>
       </Route>
       <Route path="/customers/:id">
-        <Customerdetails/>
+        <Customeredit/>
       </Route>
       <Route exact path="/customers/new">
         <Customerdetails/>
@@ -59,7 +63,7 @@ const AppRoutes = () => {
         <Agents/>
       </Route>
       <Route exact path="/agents/:id">
-        <Agentdetails/>
+        <Agentedit/>
       </Route>
       <Route exact path="/agents/new">
         <Agentdetails/>
@@ -68,7 +72,7 @@ const AppRoutes = () => {
         <Products/>
       </Route>
       <Route exact path="/products/:id">
-        <Productdetails/>
+        <Productedit/>
       </Route>
       <Route path="/products/new">
         <Productdetails/>

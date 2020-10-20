@@ -25,22 +25,36 @@ const GetOrders = gql`
 
 const AddOrders = gql`
   mutation AddOrder($customerId: Int!, $productIds: [Int!], $date: String!) {
-    createAgent(
-      color: $color
-      quantity: $quantity
-      grade: $grade
-      variety: $variety
-      length: $length
+    createOrder(
+    customerId: $customerId
+    productIds: $productIds
+    date: $date
     ) {
-      id
-      color
-      quantity
-      grade
-      variety
-      length
-      createdAt
+    id
+   	status
+    Customer{
+      name
+    }
+    orderedProducts
     }
   }
 `;
 
-export { AddOrders, GetOrders };
+const UpdateOrder = gql`
+  mutation UpdateOrder($id: Int!, $finalQuantity: Int!, $status: OrderStatus!, $productIds: Int) {
+  updateOrder(
+    id: $id
+    finalQuantity: $finalQuantity
+    status: $status
+    productIds: $productIds
+  ) {
+    id
+   	status
+    Customer{
+      name
+    }
+    orderedProducts
+  }
+}`;
+
+export { AddOrders, GetOrders, UpdateOrder };

@@ -10,7 +10,7 @@ interface SideBarProps {
   children: React.ReactNode;
 }
 
-function SideBar({ children }: SideBarProps) {
+function Dashboard({ children }: SideBarProps) {
   const { user, isAuthenticated } = useAuth0();
   const [current, setCurrent] = useState<any>("mail");
 
@@ -69,4 +69,4 @@ function SideBar({ children }: SideBarProps) {
   );
 }
 
-export default SideBar;
+export default Dashboard;

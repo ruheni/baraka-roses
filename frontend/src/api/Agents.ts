@@ -23,21 +23,21 @@ const AgentDetails = gql`
 `;
 
 const AgentCustomer = gql`
-query agentcustomer($id: Int!) {
-  agentProfile(id: $id) {
-    id
-    name
-    phoneNumber
-    email
+  query agentcustomer($id: Int!) {
+    agentProfile(id: $id) {
+      id
+      name
+      phoneNumber
+      email
+    }
+    customers {
+      name
+      phoneNumber
+      email
+      market
+      id
+    }
   }
-  customers {
-    name
-    phoneNumber
-    email
-    market
-    id
-  }
-}
 `;
 
 const AddAgents = gql`
@@ -65,17 +65,20 @@ const AddAgents = gql`
 
 const UpdateAgents = gql`
   mutation UpdateAgents(
+    $id: Int!
     $name: String!
     $phoneNumber: String!
     $email: String!
     $customerId: Int!
   ) {
     updateAgent(
+      id: $id
       name: $name
       phoneNumber: $phoneNumber
       email: $email
       customerId: $customerId
     ) {
+      id 
       name
       phoneNumber
       email
@@ -85,6 +88,5 @@ const UpdateAgents = gql`
     }
   }
 `;
-
 
 export { GetAgents, AgentDetails, AgentCustomer, AddAgents, UpdateAgents };

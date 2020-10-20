@@ -51,6 +51,7 @@ const AddProducts = gql`
 
 const UpdateProducts = gql`
   mutation UpdateProducts(
+    $id: Int!
     $color: Color!
     $quantity: Int!
     $grade: Grade!
@@ -58,6 +59,7 @@ const UpdateProducts = gql`
     $length: Int!
   ) {
     updateProduct(
+      id: $id
       color: $color
       quantity: $quantity
       grade: $grade

@@ -47,4 +47,30 @@ const AddCustomer = gql`
   }
 `;
 
-export { GetCustomers, CustomerDetails, AddCustomer };
+const UpdateCustomer = gql`
+  mutation UpdateCustomer(
+    $id: Int!
+    $name: String!
+    $contactName: String!
+    $market: String!
+    $email: String!
+    $phoneNumber: String!
+  ) {
+    updateCustomer(
+      id: $id
+      name: $name
+      contactName: $contactName
+      market: $market
+      email: $email
+      phoneNumber: $phoneNumber
+    ) {
+      id
+      name
+      phoneNumber
+      email
+      market
+    }
+  }
+`;
+
+export { GetCustomers, CustomerDetails, AddCustomer, UpdateCustomer };

@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Button, Space, Table, Typography } from "antd";
 import { GetAgents } from "api/Agents";
-import SideBar from "components/SideBar/SideBar";
+import Dashboard from "components/Dashboard/Dashboard";
 import styles from "pages/Agents/Agents.module.css";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -47,7 +47,7 @@ function Agents() {
   if (error) return <p>Error :(</p>;
 
   return (
-    <SideBar>
+    <Dashboard>
       <div className={styles.Agents}>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
@@ -65,7 +65,7 @@ function Agents() {
           <Table columns={columns} dataSource={data.agents} />
         </div>
       </div>
-    </SideBar>
+    </Dashboard>
   );
 }
 

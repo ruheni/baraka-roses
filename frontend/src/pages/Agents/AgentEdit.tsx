@@ -1,7 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Select, Space, Typography } from "antd";
-import { AddAgents, AgentCustomer } from "api/Agents";
+import { UpdateAgents, AgentCustomer } from "api/Agents";
 import Dashboard from "components/Dashboard/Dashboard";
 import styles from "pages/Products/Products.module.css";
 import React from "react";
@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 const { Option } = Select;
 const { Title } = Typography;
 
-function Agentdetails() {
+function Agentedit() {
   const [form] = Form.useForm();
   const { id }: any = useParams();
   const { data } = useQuery(AgentCustomer, {
@@ -17,19 +17,21 @@ function Agentdetails() {
   });
 
   form.setFieldsValue(data?.agentProfile);
-  const [createAgents] = useMutation(AddAgents);
+  const [editAgents] = useMutation(UpdateAgents);
 
   const onCreate = () => {
     form
       .validateFields()
       .then((values) => {
         onFinish(values);
-        let { customerId } = values;
+        let { customerId, id } = values;
 
         values.customerId = parseInt(customerId);
+        values.id = parseInt(id)
 
-        createAgents({
+        editAgents({
           variables: {
+            id: values.id,
             name: values.name,
             phoneNumber: values.phoneNumber,
             email: values.email,
@@ -51,12 +53,17 @@ function Agentdetails() {
       <div className={styles.Agents}>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
-            Add New Agent
+            Edit Agent
           </Title>
         </Space>
 
         <div className={styles.Table}>
           <Form form={form} layout="horizontal" name="add_agent_form">
+
+          <Form.Item name="id" label="Agent ID: ">
+              <Input placeholder="Agent ID" type="number" />
+            </Form.Item>
+
             <Form.Item
               name="name"
               label="Name: "
@@ -79,7 +86,10 @@ function Agentdetails() {
               <Input placeholder="Phone Number" type="number" />
             </Form.Item>
 
-            <Form.Item name="customerId" label="Customer ID: ">
+            <Form.Item name="customerId" label="Customer ID: "
+                rules={[
+                    { required: true, message: "Please input the agent's name" },
+                ]}>
               <Select placeholder="Customer ID">
                 {data?.customers.map(({id, name}: any) => (
                   <Option key={id} value={id}>
@@ -101,4 +111,4 @@ function Agentdetails() {
   );
 }
 
-export default Agentdetails;
+export default Agentedit;

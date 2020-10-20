@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { Button, Space, Table, Typography } from "antd";
-import SideBar from "components/SideBar/SideBar";
+import Dashboard from "components/Dashboard/Dashboard";
 import styles from "pages/Products/Products.module.css";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -53,7 +53,7 @@ function Products() {
   if (error) return <p>Error :( </p>;
 
   return (
-    <SideBar>
+    <Dashboard>
       <div className={styles.Products}>
         <Space align="baseline">
           <Title level={2} type="secondary" className={styles.spaceAlign}>
@@ -70,7 +70,7 @@ function Products() {
           <Table columns={columns} dataSource={data.products} />
         </div>
       </div>
-    </SideBar>
+    </Dashboard>
   );
 }
 
