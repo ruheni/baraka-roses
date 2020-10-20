@@ -51,10 +51,6 @@ function Products() {
   const { loading, error, data } = useQuery(GetProducts);
   const { isAuthenticated } = useAuth0()
 
-  useEffect(() => {
-    console.log(isAuthenticated)
-  }, [data])
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :( </p>;
 

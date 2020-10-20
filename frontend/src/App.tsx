@@ -19,6 +19,7 @@ import Team from 'pages/Team/Team';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from 'util/PrivateRoute'
+import PageNotFound from 'pages/PageNotFound/PageNotFound';
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_URI,
@@ -29,7 +30,6 @@ const client = new ApolloClient({
 const AppRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Products} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={LogIn} />
       <Route path="/reset" component={ResetPass} />
@@ -46,6 +46,8 @@ const AppRoutes = () => {
       <PrivateRoute exact path="/products/:id" comp={Productedit} />
       <PrivateRoute path="/products/new" comp={Productdetails} />
       <Route path="/team" component={Team} />
+      <Route path="*" component={PageNotFound} />
+      <PrivateRoute path="/" exact component={Products} />
     </Switch>
   )
 }
@@ -59,7 +61,7 @@ function App() {
     >
       <ApolloProvider client={client}>
         <Router>
-            <AppRoutes />
+          <AppRoutes />
         </Router>
       </ApolloProvider>
     </Auth0Provider>
