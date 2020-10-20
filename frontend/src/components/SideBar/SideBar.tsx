@@ -1,10 +1,10 @@
-import { ContainerOutlined } from "@ant-design/icons";
+import { ContainerOutlined, MenuFoldOutlined, MenuUnfoldOutlined, BellOutlined } from "@ant-design/icons";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Avatar, Layout, Menu } from "antd";
+import { Avatar, Layout, Menu, Badge, Space } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const { Header, Sider } = Layout;
+const { Header, Sider, Content } = Layout;
 
 interface SideBarProps {
   children: React.ReactNode;
@@ -14,6 +14,37 @@ function SideBar({ children }: SideBarProps) {
   const { user, isAuthenticated } = useAuth0();
   const [current, setCurrent] = useState<any>("mail");
 
+  const [collapse, setCollapse] = useState<boolean>(false);
+
+  const toggle = () => setCollapse(!collapse);
+
+  const routes = [
+    {
+      id: 1,
+      path: '/orders',
+      title: 'Orders',
+      icon: <ContainerOutlined />,
+    },
+    {
+      id: 2,
+      path: '/products',
+      title: 'Products',
+      icon: <ContainerOutlined />,
+    },
+    {
+      id: 3,
+      path: '/customers',
+      title: 'Customers',
+      icon: <ContainerOutlined />,
+    },
+    {
+      id: 4,
+      path: '/agents',
+      title: 'Agents',
+      icon: <ContainerOutlined />,
+    },
+  ]
+
   const handleClick = (e: any) => {
     console.log("click ", e);
     setCurrent({ current: e.key });
@@ -21,49 +52,63 @@ function SideBar({ children }: SideBarProps) {
 
   return (
     <Layout>
-      <Header style={{ padding: 0 }}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapse}
+        breakpoint="lg"
+        collapsedWidth="0"
+      >
+        <div className="brand">
+          <p>Baraka Roses</p>
+        </div>
         <Menu
-          onClick={handleClick}
-          selectedKeys={[current]}
-          mode="horizontal"
+          defaultSelectedKeys={["1"]}
+          mode="inline"
           theme="dark"
+          style={{ minHeight: "95vh" }}
         >
-          <Menu.Item key="brand" >
-            Baraka Roses
-          </Menu.Item>
-
-          <Menu.Item key="notify" >
-            Notifications
-          </Menu.Item>
-          <Menu.Item key="profile" >
-            {isAuthenticated ? <Avatar src={user.picture} /> : null}
-          </Menu.Item>
+          {/** sidebar routes */}
+          {routes.map(({ id, path, title, icon }) => (
+            <Menu.Item key={id} icon={icon}>
+              <Link to={path}>{title}</Link>
+            </Menu.Item>
+          ))}
         </Menu>
-      </Header>
-      <Layout>
-        <Sider>
-          <Menu
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            theme="dark"
-            style={{ minHeight: "95vh" }}
+      </Sider>
+      <Layout className="site-layout">
+        <Header className="site-layout-background"
+          style={{ padding: 0 }}
+        >
+          {React.createElement(
+            collapse ? MenuUnfoldOutlined : MenuFoldOutlined,
+            {
+              className: "trigger",
+              onClick: toggle,
+            },
+          )}
+          <Header
+            className="site-layout-background"
+            style={{ padding: 0 }}
           >
-            <Menu.Item key="1" icon={<ContainerOutlined />}>
-              <Link to="/orders">Orders</Link>
-            </Menu.Item>
-            <Menu.Item key="2" icon={<ContainerOutlined />}>
-              <Link to="/customers">Customers</Link>
-            </Menu.Item>
-            <Menu.Item key="3" icon={<ContainerOutlined />}>
-              <Link to="/agents">Agents</Link>
-            </Menu.Item>
-            <Menu.Item key="4" icon={<ContainerOutlined />}>
-              <Link to="/products">Products</Link>
-            </Menu.Item>
-          </Menu>
-        </Sider>
 
-        {children}
+            <Space size="middle" className="align-right">
+              <Badge dot>
+                <BellOutlined />
+              </Badge>
+              {isAuthenticated ? <Avatar src={user.picture} /> : null}
+            </Space>
+          </Header>
+        </Header>
+        <Content
+          style={{
+            padding: 24,
+            minHeight: "calc(100vh - 64px)",
+          }}
+        >
+          {children}
+        </Content>
+
       </Layout>
     </Layout>
   );

@@ -14,7 +14,6 @@ import Signup from 'pages/SignUp/SignUp';
 import Team from 'pages/Team/Team';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './App.css';
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_URI,
@@ -25,57 +24,23 @@ const client = new ApolloClient({
 const AppRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/">
-        <Products />
-      </Route>
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="/login">
-        <LogIn />
-      </Route>
-      <Route path="/reset">
-        <ResetPass />
-      </Route>
-      <Route exact path="/orders">
-        <Orders/>
-      </Route>
-      <Route path="/orders/:id">
-        <Orderdetails/>
-      </Route>
-      <Route exact path="/orders/new">
-        <Orderdetails/>
-      </Route>
-      <Route exact path="/customers">
-        <Customers/>
-      </Route>
-      <Route path="/customers/:id">
-        <Customerdetails/>
-      </Route>
-      <Route exact path="/customers/new">
-        <Customerdetails/>
-      </Route>
-      <Route exact path="/agents">
-        <Agents/>
-      </Route>
-      <Route exact path="/agents/:id">
-        <Agentdetails/>
-      </Route>
-      <Route exact path="/agents/new">
-        <Agentdetails/>
-      </Route>
-      <Route exact path="/products">
-        <Products/>
-      </Route>
-      <Route exact path="/products/:id">
-        <Productdetails/>
-      </Route>
-      <Route path="/products/new">
-        <Productdetails/>
-      </Route>
-      <Route path="/team">
-        <Team/>
-      </Route>
+      <Route exact path="/" component={Products} />
+      <Route path="/signup" component={Signup} />
+      <Route path="/login" component={LogIn} />
+      <Route path="/reset" component={ResetPass} />
+      <Route exact path="/orders" component={Orders} />
+      <Route path="/orders/:id" component={Orderdetails} />
+      <Route exact path="/orders/new" component={Orderdetails} />
+      <Route exact path="/customers" component={Customers} />
+      <Route path="/customers/:id" component={Customerdetails} />
+      <Route exact path="/customers/new" component={Customerdetails} />
+      <Route exact path="/agents" component={Agents} />
+      <Route exact path="/agents/:id" component={Agentdetails} />
+      <Route exact path="/agents/new" component={Agentdetails} />
+      <Route exact path="/products" component={Products} />
+      <Route exact path="/products/:id" component={Productdetails} />
+      <Route path="/products/new" component={Productdetails} />
+      <Route path="/team" component={Team} />
     </Switch>
   )
 }
@@ -83,17 +48,17 @@ const AppRoutes = () => {
 function App() {
   return (
     <Auth0Provider
-    domain={`${process.env.REACT_APP_DOMAIN}`}
-    clientId={`${process.env.REACT_APP_CLIENTID}`}
-    redirectUri={window.location.origin}
+      domain={`${process.env.REACT_APP_DOMAIN}`}
+      clientId={`${process.env.REACT_APP_CLIENTID}`}
+      redirectUri={window.location.origin}
     >
-    <ApolloProvider client={client}>
-      <Router>
-        <div className="App">
-          <AppRoutes />
-        </div>
-      </Router>
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        <Router>
+          <div className="App">
+            <AppRoutes />
+          </div>
+        </Router>
+      </ApolloProvider>
     </Auth0Provider>
   );
 }

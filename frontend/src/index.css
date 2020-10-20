@@ -1,5 +1,25 @@
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
+@import '~antd/dist/antd.css';
+
+.site-layout .site-layout-background {
+	background: #fff;
 }
 
+.trigger {
+	font-size: 18px;
+	line-height: 64px;
+	padding: 0 24px;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.trigger:hover {
+	color: #1890ff;
+}
+
+.site-layout .site-layout-background {
+	background: #fff;
+}
+
+.align-right {
+	float: right;
+}
