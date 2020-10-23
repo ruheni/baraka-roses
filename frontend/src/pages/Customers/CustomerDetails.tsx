@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Typography } from "antd";
 import { AddCustomer, CustomerDetails } from "api/Customers";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Customers/Customers.module.css";
+import "index.css";
 import React from "react";
 import { useParams } from "react-router-dom";
 
@@ -44,12 +44,12 @@ function Customerdetails() {
 
   return (
     <Dashboard>
-      <div className={styles.Customers}>
-        <Title level={2} type="secondary" className={styles.spaceAlign}>
+      <div>
+        <Title level={2} type="secondary" className="spaceAlign">
           Add New Customer
         </Title>
 
-        <div className={styles.Table}>
+        <div className="Table">
           <Form form={form} layout="horizontal" name="add_customer_form">
             <Form.Item
               name="name"

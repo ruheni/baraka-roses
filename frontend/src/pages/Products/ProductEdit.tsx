@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Select, Typography } from "antd";
 import { UpdateProducts, ProductDetails } from "api/Products";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Products/Products.module.css";
+import "index.css";
 import React from "react";
 import { useParams } from "react-router-dom";
 
@@ -52,12 +52,12 @@ function Productedit() {
 
   return (
     <Dashboard>
-      <div className={styles.Products}>
-        <Title level={2} type="secondary" className={styles.spaceAlign}>
+      <div>
+        <Title level={2} type="secondary" className="spaceAlign">
           Edit Product
         </Title>
 
-        <div className={styles.Table}>
+        <div className="Table">
           <Form form={form} layout="horizontal" name="add_product_form">
             <Form.Item name="color" label="Color: ">
               <Select placeholder="Color">

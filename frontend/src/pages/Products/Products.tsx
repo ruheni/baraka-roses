@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { Button, Space, Table, Typography } from "antd";
-import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Products/Products.module.css";
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { GetProducts } from "api/Products";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Button, Space, Table, Typography } from "antd";
+import { GetProducts } from "api/Products";
+import Dashboard from "components/Dashboard/Dashboard";
+import "index.css";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -58,7 +58,7 @@ function Products() {
     <Dashboard>
       <div>
         <Space align="baseline">
-          <Title level={2} type="secondary" className={styles.spaceAlign}>
+          <Title level={2} type="secondary" className="spaceAlign">
             Products
           </Title>
 
@@ -68,7 +68,7 @@ function Products() {
             </Button>
           </Link>
         </Space>
-        <div className={styles.Table}>
+        <div className="Table">
           <Table columns={columns} dataSource={data.products} />
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Button, Space, Table, Typography } from "antd";
 import { GetCustomers } from "api/Customers";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Customers/Customers.module.css";
+import 'index.css';
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -50,7 +50,7 @@ function Customers() {
     <Dashboard>
       <div>
         <Space align="baseline">
-          <Title level={2} type="secondary" className={styles.spaceAlign}>
+          <Title level={2} type="secondary" className="spaceAlign">
             Customers
           </Title>
           <Link to="customers/new">
@@ -59,7 +59,7 @@ function Customers() {
             </Button>
           </Link>
         </Space>
-        <div className={styles.Table}>
+        <div className="Table">
           <Table columns={columns} dataSource={data.customers} />
         </div>
       </div>

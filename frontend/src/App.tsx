@@ -13,7 +13,6 @@ import Orders from 'pages/Orders/Orders';
 import Productedit from 'pages/Products/ProductEdit'
 import Productdetails from 'pages/Products/ProductDetails';
 import Products from 'pages/Products/Products';
-import ResetPass from 'pages/ResetPass/ResetPass';
 import Signup from 'pages/SignUp/SignUp';
 import Team from 'pages/Team/Team';
 import React from 'react';
@@ -32,7 +31,6 @@ const AppRoutes = () => {
     <Switch>
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={LogIn} />
-      <Route path="/reset" component={ResetPass} />
       <PrivateRoute exact path="/orders" comp={Orders} />
       <PrivateRoute path="/orders/:id" comp={Orderedit} />
       <PrivateRoute exact path="/orders/new" comp={Orderdetails} />

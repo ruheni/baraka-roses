@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, Select, Space, Typography } from "antd";
 import { AddAgents, AgentCustomer } from "api/Agents";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Products/Products.module.css";
+import "index.css";
 import React from "react";
 import { useParams } from "react-router-dom";
 const { Option } = Select;
@@ -48,14 +48,14 @@ function Agentdetails() {
 
   return (
     <Dashboard>
-      <div className={styles.Agents}>
+      <div>
         <Space align="baseline">
-          <Title level={2} type="secondary" className={styles.spaceAlign}>
+          <Title level={2} type="secondary" className="spaceAlign">
             Add New Agent
           </Title>
         </Space>
 
-        <div className={styles.Table}>
+        <div className="Table">
           <Form form={form} layout="horizontal" name="add_agent_form">
             <Form.Item
               name="name"

@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Button, Space, Table, Typography } from "antd";
 import { GetAgents } from "api/Agents";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Agents/Agents.module.css";
+import "index.css";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -50,7 +50,7 @@ function Agents() {
     <Dashboard>
       <div>
         <Space align="baseline">
-          <Title level={2} type="secondary" className={styles.spaceAlign}>
+          <Title level={2} type="secondary" className="spaceAlign">
             Agents
           </Title>
 
@@ -61,7 +61,7 @@ function Agents() {
           </Link>
         </Space>
 
-        <div className={styles.Table}>
+        <div className="Table">
           <Table columns={columns} dataSource={data.agents} />
         </div>
       </div>

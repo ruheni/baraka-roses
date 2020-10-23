@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { Button, Form, Input, Space, Typography } from "antd";
 import { AddOrders } from "api/Orders";
 import Dashboard from "components/Dashboard/Dashboard";
-import styles from "pages/Orders/Orders.module.css";
+import "index.css";
 import React from "react";
 
 const { Title } = Typography;
@@ -43,14 +43,14 @@ function Orderdetails() {
 
   return (
     <Dashboard>
-      <div className={styles.Orders}>
+      <div>
         <Space align="baseline">
-          <Title level={2} type="secondary" className={styles.spaceAlign}>
+          <Title level={2} type="secondary" className="spaceAlign">
             Add New Order
           </Title>
         </Space>
 
-        <div className={styles.Table}>
+        <div className="Table">
           <Form form={form} layout="horizontal" name="add_orders_form">
             <Form.Item
               name="customer"
