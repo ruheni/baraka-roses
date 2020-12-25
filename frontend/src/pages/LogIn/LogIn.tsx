@@ -1,36 +1,19 @@
-import React from 'react';
-import styles from './LogIn.module.css';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { useAuth0 } from "@auth0/auth0-react";
+import React, { useEffect } from "react";
+import styles from "./LogIn.module.css";
 
-function LogIn() {
+const LogIn = () => {
+  const { loginWithRedirect } = useAuth0();
+
+  useEffect(() => {
+    loginWithRedirect();
+  });
+
   return (
     <div className={styles.Login}>
-      <h1 className= {styles.mainTitle} >Baraka Flowers</h1>
-
-      <div className={styles.inputForm}>
-          <Form>
-              <h1>Log in</h1>
-
-              <FormGroup>
-                <Input className={styles.inputEntry} type="email" name="email" id="Email" placeholder="Email" />
-              </FormGroup>
-
-              <FormGroup>
-                <Input className={styles.inputEntry} type="password" name="pass" id="Pass" placeholder="Password" />
-              </FormGroup>
-
-              <FormGroup check className={styles.checkBox}>
-                <Label check>
-                <Input type="checkbox" />{' '}
-                Remember me! 
-                </Label>
-              </FormGroup>
-              <a href="/" className={styles.forgotTxt}>Forgot password?</a>
-            <Button className={styles.loginBtn}>Log In</Button>
-          </Form>
-      </div>
+      <h1 className={styles.mainTitle}>Baraka Flowers</h1>
     </div>
   );
-}
+};
 
 export default LogIn;

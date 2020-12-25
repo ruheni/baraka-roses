@@ -1,5 +1,44 @@
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
+@import '~antd/dist/antd.css';
+
+.site-layout .site-layout-background {
+	background: #fff;
 }
 
+.trigger {
+	font-size: 18px;
+	line-height: 64px;
+	padding: 0 24px;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.trigger:hover {
+	color: #1890ff;
+}
+
+.site-layout .site-layout-background {
+	background: #fff;
+}
+
+.align-right {
+	float: right;
+}
+
+.button-align-right {
+	margin-bottom: 20px;
+	display: grid;
+	justify-items: end;
+}
+
+.spaceAlign{
+    margin-right: 50vw;
+    margin-left: 50px;
+}
+
+.Table{
+    min-width: 76vw;
+    display: inline-block;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 20px;
+}          
