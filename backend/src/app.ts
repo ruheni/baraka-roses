@@ -1,30 +1,27 @@
-import 'dotenv'
-import { ApolloServer } from 'apollo-server-express'
-import express from 'express'
-import expressJwt from 'express-jwt'
+
+import Fastify from 'fastify'
+import mercurius from 'mercurius'
+import mercuriusCodegen from 'mercurius-codegen'
 import { createContext } from './context'
+import { schema } from './schema'
 
-import resolvers from './resolvers'
-import typeDefs from './typeDefs'
+const app = Fastify()
 
-const port = 4000
-const app = express()
+type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
 
-app.use(
-  expressJwt({
-    secret: process.env.JWT_SECRET || 'SUPER_SECRET',
-    algorithms: ['HS256'],
-    credentialsRequired: false,
-  }),
-)
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+declare module 'mercurius' {
+  interface MercuriusContext extends PromiseType<ReturnType<typeof createContext>> { }
+}
+
+app.register(mercurius, {
+  schema,
   context: createContext,
+  graphiql: "playground",
 })
 
-server.applyMiddleware({ app })
+mercuriusCodegen(app, {
+  targetPath: '/generated/nexus.ts'
+}).catch(console.error)
 
-app.listen({ port }, () => {
-  console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`)
-})
+app.listen(4000)
+  .then(() => console.log(`🚀 Server ready at 4000`))

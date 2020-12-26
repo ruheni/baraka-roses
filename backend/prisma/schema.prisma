@@ -1,3 +1,7 @@
+generator prisma_client {
+  provider = "prisma-client-js"
+}
+
 datasource postgres {
   provider = "postgres"
   url      = env("HEROKU_POSTGRESQL_OLIVE_URL")
@@ -19,11 +23,11 @@ model Order {
   id              Int              @id @default(autoincrement())
   status          OrderStatus
   date            DateTime
-  Customer        Customer?        @relation(fields: [customerId], references: [id])
+  customer        Customer?        @relation(fields: [customerId], references: [id])
   customerId      Int?
   createdAt       DateTime         @default(now())
   orderedProducts OrderedProduct[]
-  Product         Product[]
+  product         Product[]
 }
 
 model OrderedProduct {
@@ -32,21 +36,21 @@ model OrderedProduct {
   initialQuantity Int
   finalQuantity   Int
   productId       Int
-  Order           Order?  @relation(fields: [orderId], references: [id])
+  order           Order?  @relation(fields: [orderId], references: [id])
   orderId         Int?
 }
 
 model Product {
-  id             Int              @id @default(autoincrement())
-  color          Color
-  length         Int
-  grade          Grade
-  variety        String
-  quantity       Int
-  Order          Order?           @relation(fields: [orderId], references: [id])
-  orderId        Int?
-  createdAt      DateTime         @default(now())
-  OrderedProduct OrderedProduct[]
+  id              Int              @id @default(autoincrement())
+  color           Color
+  length          Int
+  grade           Grade
+  variety         String
+  quantity        Int
+  order           Order?           @relation(fields: [orderId], references: [id])
+  orderId         Int?
+  createdAt       DateTime         @default(now())
+  orderedProducts OrderedProduct[]
 }
 
 model Agent {
@@ -54,7 +58,7 @@ model Agent {
   name        String
   phoneNumber String
   email       String    @unique
-  Customer    Customer? @relation(fields: [customerId], references: [id])
+  customer    Customer? @relation(fields: [customerId], references: [id])
   customerId  Int?
   createdAt   DateTime  @default(now())
 }
@@ -97,8 +101,4 @@ enum OrderStatus {
   PENDING
   REVIEWED
   CANCELLED
-}
-
-generator prisma_client {
-  provider = "prisma-client-js"
 }

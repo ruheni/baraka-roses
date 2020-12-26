@@ -1,14 +1,16 @@
 import { PrismaClient } from '@prisma/client'
+import { FastifyRequest, FastifyReply } from 'fastify'
 
 // prisma client context
 const prisma = new PrismaClient()
-
-// authentication context
-const authContext = ({ req }: any) => {
-    const user = req.user || null
-    return { user }
+export interface Context {
+    prisma: PrismaClient
+    authorization: FastifyRequest
 }
 
-export function createContext() {
-    return { prisma, authContext }
+export const createContext = async (req: FastifyRequest, _reply: FastifyReply) => {
+    return {
+        prisma,
+        authorization: req.headers.authorization || null,
+    }
 }

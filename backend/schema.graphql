@@ -4,7 +4,7 @@
 
 type Agent {
   createdAt: DateTime!
-  Customer: Customer
+  customer: Customer
   email: String!
   id: Int!
   name: String!
@@ -17,19 +17,10 @@ input AgentListRelationFilter {
   some: AgentWhereInput
 }
 
-input AgentOrderByInput {
-  createdAt: SortOrder
-  customerId: SortOrder
-  email: SortOrder
-  id: SortOrder
-  name: SortOrder
-  phoneNumber: SortOrder
-}
-
 input AgentWhereInput {
   AND: [AgentWhereInput!]
   createdAt: DateTimeFilter
-  Customer: CustomerWhereInput
+  customer: CustomerWhereInput
   customerId: IntNullableFilter
   email: StringFilter
   id: IntFilter
@@ -63,7 +54,7 @@ enum Color {
 }
 
 type Customer {
-  agents(after: AgentWhereUniqueInput, before: AgentWhereUniqueInput, first: Int, last: Int, orderBy: [AgentOrderByInput!], where: AgentWhereInput): [Agent!]!
+  agents(after: AgentWhereUniqueInput, before: AgentWhereUniqueInput, first: Int, last: Int): [Agent!]!
   contactName: String!
   createdAt: DateTime!
   email: String!
@@ -89,11 +80,6 @@ input CustomerWhereInput {
   phoneNumber: StringFilter
 }
 
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
-`date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
-8601 standard for representation of dates and times using the Gregorian calendar.
-"""
 scalar DateTime
 
 input DateTimeFilter {
@@ -105,6 +91,27 @@ input DateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input EnumColorFilter {
+  equals: Color
+  in: [Color!]
+  not: NestedEnumColorFilter
+  notIn: [Color!]
+}
+
+input EnumGradeFilter {
+  equals: Grade
+  in: [Grade!]
+  not: NestedEnumGradeFilter
+  notIn: [Grade!]
+}
+
+input EnumOrderStatusFilter {
+  equals: OrderStatus
+  in: [OrderStatus!]
+  not: NestedEnumOrderStatusFilter
+  notIn: [OrderStatus!]
 }
 
 """Flower grades"""
@@ -135,21 +142,16 @@ input IntNullableFilter {
   notIn: [Int!]
 }
 
-"""
-The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar Json
-
 type Mutation {
   createAgent(customerId: Int!, email: String!, name: String!, phoneNumber: String!): Agent
-  createCustomer(agentIds: [Int!]!, contactName: String!, email: String!, market: String!, name: String!, phoneNumber: String!): Customer!
-  createOrder(customerId: Int!, date: String!, productIds: [Int!]!): Order
+  createCustomer(agentIds: [Int]!, contactName: String!, email: String!, market: String!, name: String!, phoneNumber: String!): Customer!
+  createOrder(customerId: Int!, date: String!, productIds: [Int]!): Order
   createProduct(color: Color!, grade: Grade!, length: Int!, quantity: Int!, variety: String!): Product
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, firstName: String!, lastName: String!, password: String!, role: Role!): AuthPayload
   updateAgent(email: String!, id: Int!, name: String!, phoneNumber: String!): Agent!
   updateCustomer(contactName: String!, email: String!, id: Int!, market: String!, name: String!, phoneNumber: String!): Customer!
-  updateOrder(finalQuantity: Int!, id: Int!, productIds: Int, status: OrderStatus!): Order
+  updateOrder(finalQuantity: Int, id: Int!, productIds: [Int], status: OrderStatus!): Order
   updateProduct(color: Color!, grade: Grade!, id: Int!, length: Int!, quantity: Int!, variety: String!): Product
   updateUser(email: String!, firstName: String!, id: Int!, lastName: String!, password: String!, role: Role!): User
 }
@@ -163,6 +165,27 @@ input NestedDateTimeFilter {
   lte: DateTime
   not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input NestedEnumColorFilter {
+  equals: Color
+  in: [Color!]
+  not: NestedEnumColorFilter
+  notIn: [Color!]
+}
+
+input NestedEnumGradeFilter {
+  equals: Grade
+  in: [Grade!]
+  not: NestedEnumGradeFilter
+  notIn: [Grade!]
+}
+
+input NestedEnumOrderStatusFilter {
+  equals: OrderStatus
+  in: [OrderStatus!]
+  not: NestedEnumOrderStatusFilter
+  notIn: [OrderStatus!]
 }
 
 input NestedIntFilter {
@@ -203,7 +226,7 @@ input NestedStringFilter {
 
 type Order {
   createdAt: DateTime!
-  Customer: Customer
+  customer: Customer
   date: DateTime!
   id: Int!
   orderedProducts(after: OrderedProductWhereUniqueInput, before: OrderedProductWhereUniqueInput, first: Int, last: Int): [OrderedProduct!]!
@@ -230,7 +253,7 @@ input OrderedProductWhereInput {
   initialQuantity: IntFilter
   NOT: [OrderedProductWhereInput!]
   OR: [OrderedProductWhereInput!]
-  Order: OrderWhereInput
+  order: OrderWhereInput
   orderId: IntNullableFilter
   product: ProductWhereInput
   productId: IntFilter
@@ -264,15 +287,15 @@ enum OrderStatus {
 input OrderWhereInput {
   AND: [OrderWhereInput!]
   createdAt: DateTimeFilter
-  Customer: CustomerWhereInput
+  customer: CustomerWhereInput
   customerId: IntNullableFilter
   date: DateTimeFilter
   id: IntFilter
   NOT: [OrderWhereInput!]
   OR: [OrderWhereInput!]
   orderedProducts: OrderedProductListRelationFilter
-  Product: ProductListRelationFilter
-  status: OrderStatus
+  product: ProductListRelationFilter
+  status: EnumOrderStatusFilter
 }
 
 type Product {
@@ -293,15 +316,15 @@ input ProductListRelationFilter {
 
 input ProductWhereInput {
   AND: [ProductWhereInput!]
-  color: Color
+  color: EnumColorFilter
   createdAt: DateTimeFilter
-  grade: Grade
+  grade: EnumGradeFilter
   id: IntFilter
   length: IntFilter
   NOT: [ProductWhereInput!]
   OR: [ProductWhereInput!]
-  Order: OrderWhereInput
-  OrderedProduct: OrderedProductListRelationFilter
+  order: OrderWhereInput
+  orderedProducts: OrderedProductListRelationFilter
   orderId: IntNullableFilter
   quantity: IntFilter
   variety: StringFilter
@@ -309,16 +332,21 @@ input ProductWhereInput {
 
 type Query {
   agentProfile(id: Int!): Agent
-  agents: [Agent!]!
+  agents: [Agent]!
   customerProfile(id: Int!): Customer
-  customers: [Customer!]!
-  findOrdersByStatus(status: OrderStatus!): [Order!]
+  customers: [Customer]!
+  findOrdersByStatus(status: OrderStatus!): [Order]
   orderDetails(id: Int!): Order
-  orders: [Order!]!
+  orders: [Order!]
   productDetails(id: Int!): Product
-  products: [Product!]!
+  products: [Product]!
   userProfile(email: String!): User
-  users: [User!]!
+  users: [User]!
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 """These are the different roles supported on the platform"""
@@ -343,6 +371,7 @@ input StringFilter {
   in: [String!]
   lt: String
   lte: String
+  mode: QueryMode
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
